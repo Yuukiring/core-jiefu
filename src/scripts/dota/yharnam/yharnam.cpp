@@ -534,14 +534,16 @@ struct Boss_BloodStarvedBeast : public ScriptedAI
     }
 
     uint32 IMPACT_TIMER;
-    bool bloodthirst_70;
-    bool bloodthirst_30;
+    bool bloodthirst_90;
+    bool bloodthirst_50;
+    bool bloodthirst_10;
 
     void Reset() override
     {
         IMPACT_TIMER = 7500;
-        bloodthirst_70 = false;
-        bloodthirst_30 = false;
+        bloodthirst_90 = false;
+        bloodthirst_50 = false;
+        bloodthirst_10 = false;
     }
 
     void Aggro(Unit* pWho) override
@@ -586,18 +588,25 @@ struct Boss_BloodStarvedBeast : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->GetVictim())
             return;
 
-        if (m_creature->GetHealthPercent() < 70.0f && !bloodthirst_70)
+        if (m_creature->GetHealthPercent() < 90.0f && !bloodthirst_90)
         {
             DoCastSpellIfCan(m_creature, SPELL_BLOODTHIRST);
             DoScriptText(EMOTE_ENRAGE, m_creature);
-            bloodthirst_70 = true;
+            bloodthirst_90 = true;
         }
 
-        if (m_creature->GetHealthPercent() < 30.0f && !bloodthirst_30)
+        if (m_creature->GetHealthPercent() < 50.0f && !bloodthirst_50)
         {
             DoCastSpellIfCan(m_creature, SPELL_BLOODTHIRST);
             DoScriptText(EMOTE_ENRAGE, m_creature);
-            bloodthirst_30 = true;
+            bloodthirst_50 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 10.0f && !bloodthirst_10)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_BLOODTHIRST);
+            DoScriptText(EMOTE_ENRAGE, m_creature);
+            bloodthirst_10 = true;
         }
 
         //IMPACT
