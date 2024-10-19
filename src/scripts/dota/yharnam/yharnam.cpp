@@ -590,6 +590,10 @@ struct Boss_BloodStarvedBeast : public ScriptedAI
 
         if (m_creature->GetHealthPercent() < 90.0f && !bloodthirst_90)
         {
+            if (m_creature->HasAura(SPELL_CONFUSE))
+                m_creature->RemoveAurasDueToSpell(SPELL_CONFUSE);
+            if (m_creature->HasAura(SPELL_DRUNKEN))
+                m_creature->RemoveAurasDueToSpell(SPELL_DRUNKEN);
             DoCastSpellIfCan(m_creature, SPELL_BLOODTHIRST);
             DoScriptText(EMOTE_ENRAGE, m_creature);
             bloodthirst_90 = true;
@@ -597,6 +601,10 @@ struct Boss_BloodStarvedBeast : public ScriptedAI
 
         if (m_creature->GetHealthPercent() < 50.0f && !bloodthirst_50)
         {
+            if (m_creature->HasAura(SPELL_CONFUSE))
+                m_creature->RemoveAurasDueToSpell(SPELL_CONFUSE);
+            if (m_creature->HasAura(SPELL_DRUNKEN))
+                m_creature->RemoveAurasDueToSpell(SPELL_DRUNKEN);
             DoCastSpellIfCan(m_creature, SPELL_BLOODTHIRST);
             DoScriptText(EMOTE_ENRAGE, m_creature);
             bloodthirst_50 = true;
@@ -604,6 +612,10 @@ struct Boss_BloodStarvedBeast : public ScriptedAI
 
         if (m_creature->GetHealthPercent() < 10.0f && !bloodthirst_10)
         {
+            if (m_creature->HasAura(SPELL_CONFUSE))
+                m_creature->RemoveAurasDueToSpell(SPELL_CONFUSE);
+            if (m_creature->HasAura(SPELL_DRUNKEN))
+                m_creature->RemoveAurasDueToSpell(SPELL_DRUNKEN);
             DoCastSpellIfCan(m_creature, SPELL_BLOODTHIRST);
             DoScriptText(EMOTE_ENRAGE, m_creature);
             bloodthirst_10 = true;
