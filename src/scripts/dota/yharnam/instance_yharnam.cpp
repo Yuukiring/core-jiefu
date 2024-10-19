@@ -49,13 +49,6 @@ struct instance_yharnam : public ScriptedInstance
             {
                 if (Creature* pBloodStarvedBeast = instance->GetCreature(m_uiBloodStarvedBeastGUID))
                 {
-                    /*
-                    if (Creature* pTheCowKing = pBloodStarvedBeast->SummonCreature(NPC_THE_COW_KING, -1095.44f, 2234.75f, 182.862f, 0.0f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 120 * MINUTE * IN_MILLISECONDS))
-                    {
-                        pTheCowKing->SetRespawnDelay(7 * DAY);
-                        m_uiSpawnChestOnAllBossDeath = 0;
-                    }
-                    */
                     pBloodStarvedBeast->SummonGameObject(GO_CHEST, -1095.44f, 2234.75f, 182.862f, 0.0f, 0, 0, 0, 0, 43200);
                     m_uiSpawnChestOnAllBossDeath = 0;
                 }
