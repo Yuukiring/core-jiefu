@@ -34,6 +34,13 @@ enum
     SPELL_BLOODTHIRST               = 34246,
     SPELL_CONFUSE                   = 34248,
     SPELL_DRUNKEN                   = 34249,
+    //SPELL_FATHER_GASCOIGNE
+    SPELL_ANTIGUN                   = 34250,
+    SPELL_DEMORALIZING_SHOUT        = 34251,
+    SPELL_WHIRLWIND                 = 34252,
+    SPELL_WHIRLWIND_AURA            = 34253,
+    SPELL_TRANSFUR                  = 34255,
+    SPELL_TRANSFUR_CHARM            = 34257,
     //SAY
     SAY_AGGRO_BLOOD_STARVED_BEAST           = -2000013,
     SAY_AGGRO_THE_HUNTER                    = -2000014,
@@ -524,7 +531,6 @@ CreatureAI* GetAI_Npc_YharnamMedicAI(Creature* pCreature)
     return new Npc_YharnamMedicAI(pCreature);
 }
 
-
 //boss_bloodstarvedbeast
 struct Boss_BloodStarvedBeast : public ScriptedAI
 {
@@ -638,6 +644,143 @@ CreatureAI* GetAI_Boss_BloodStarvedBeast(Creature* pCreature)
     return new Boss_BloodStarvedBeast(pCreature);
 }
 
+//boss_father_gascoigne
+struct Boss_FatherGascoigne : public ScriptedAI
+{
+    Boss_FatherGascoigne(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        Reset();
+    }
+
+    uint32 ANTIGUN_TIMER;
+    uint32 DEMORALIZING_SHOUT_TIMER;
+    uint32 WHIRLWIND_TIMER;
+    uint32 TRANSFUR_CHARM_TIMER;
+    bool whirlwind_aura_80;
+    bool whirlwind_aura_60;
+    bool transfur_40;
+
+    void Reset() override
+    {
+        ANTIGUN_TIMER = 1000;
+        DEMORALIZING_SHOUT_TIMER = 10000;
+        WHIRLWIND_TIMER = 5000;
+        TRANSFUR_CHARM_TIMER = 7500;
+        whirlwind_aura_80 = false;
+        whirlwind_aura_60 = false;
+        transfur_40 = false;
+        m_creature->LoadEquipment(m_creature->GetCreatureInfo()->equipment_id, true);
+        m_creature->SetDisplayId(16012);
+    }
+
+    void JustDied(Unit* Killer) override
+    {
+        DoScriptText(SAY_DEATH_THE_HUNTER, m_creature);
+    }
+
+    void Aggro(Unit* pWho) override
+    {
+        DoScriptText(SAY_AGGRO_THE_HUNTER, m_creature);
+        m_creature->CallForHelp(45.0f);
+    }
+
+    void AssignRandomThreat()
+    {
+        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, nullptr, SELECT_FLAG_PLAYER))
+        {
+            DoResetThreat();
+            m_creature->GetThreatManager().addThreatDirectly(pTarget, urand(1000, 2000));
+        }
+    }
+
+    void UpdateAI(uint32 const uiDiff) override
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->GetVictim())
+            return;
+
+        if (m_creature->GetHealthPercent() < 80.0f && !whirlwind_aura_80)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_WHIRLWIND_AURA);
+            AssignRandomThreat();
+            whirlwind_aura_80 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 60.0f && !whirlwind_aura_60)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_WHIRLWIND_AURA);
+            AssignRandomThreat();
+            whirlwind_aura_60 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 40.0f && !transfur_40)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_TRANSFUR);
+            m_creature->SetVirtualItem(BASE_ATTACK, 0);
+            m_creature->SetVirtualItem(OFF_ATTACK, 0);
+            m_creature->SetVirtualItem(RANGED_ATTACK, 0);
+            m_creature->SetDisplayId(11179);
+            DoScriptText(SAY_TRANSITION_THE_HUNTER, m_creature);
+            AssignRandomThreat();
+            transfur_40 = true;
+        }
+
+        if (!m_creature->HasAura(SPELL_WHIRLWIND_AURA) && !transfur_40)
+        {
+            //ANTIGUN
+            if (ANTIGUN_TIMER < uiDiff)
+            {
+                if (Unit* pTarget = m_creature->GetVictim())
+                {
+                    float shield_charge_distance = m_creature->GetDistance(pTarget);
+                    if (shield_charge_distance >= 8.0f && shield_charge_distance <= 40.0f)
+                    {
+                        DoCastSpellIfCan(pTarget, SPELL_ANTIGUN);
+                        ANTIGUN_TIMER = urand(5500,6500);
+                    }
+                }
+            }
+            else ANTIGUN_TIMER -= uiDiff;
+
+            //DEMORALIZING_SHOUT
+            if (DEMORALIZING_SHOUT_TIMER < uiDiff)
+            {
+                DoCastSpellIfCan(m_creature->GetVictim(), SPELL_DEMORALIZING_SHOUT);
+                DEMORALIZING_SHOUT_TIMER = urand(25000,35000);
+            }
+            else DEMORALIZING_SHOUT_TIMER -= uiDiff;
+
+            //WHIRLWIND
+            if (WHIRLWIND_TIMER < uiDiff)
+            {
+                DoCastSpellIfCan(m_creature->GetVictim(), SPELL_WHIRLWIND);
+                WHIRLWIND_TIMER = urand(7500,12500);
+            }
+            else WHIRLWIND_TIMER -= uiDiff;
+        }
+
+        if (transfur_40)
+        {
+            //TRANSFUR_CHARM
+            if (TRANSFUR_CHARM_TIMER < uiDiff)
+            {
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, nullptr, SELECT_FLAG_PLAYER))
+                {
+                    DoCastSpellIfCan(pTarget, SPELL_TRANSFUR_CHARM);
+                    TRANSFUR_CHARM_TIMER = urand(17500,22500);
+                }
+            }
+            else TRANSFUR_CHARM_TIMER -= uiDiff;
+        }
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_Boss_FatherGascoigne(Creature* pCreature)
+{
+    return new Boss_FatherGascoigne(pCreature);
+}
+
 void AddSC_yharnam()
 {
     Script* newscript;
@@ -680,5 +823,10 @@ void AddSC_yharnam()
     newscript = new Script;
     newscript->Name = "boss_blood_starved_beast";
     newscript->GetAI = &GetAI_Boss_BloodStarvedBeast;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "boss_father_gascoigne";
+    newscript->GetAI = &GetAI_Boss_FatherGascoigne;
     newscript->RegisterSelf();
 }
