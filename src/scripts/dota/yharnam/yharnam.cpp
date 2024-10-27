@@ -681,7 +681,7 @@ struct Boss_FatherGascoigne : public ScriptedAI
     void Aggro(Unit* pWho) override
     {
         DoScriptText(SAY_AGGRO_THE_HUNTER, m_creature);
-        m_creature->CallForHelp(45.0f);
+        m_creature->CallForHelp(90.0f);
     }
 
     void AssignRandomThreat()
@@ -715,13 +715,13 @@ struct Boss_FatherGascoigne : public ScriptedAI
         if (m_creature->GetHealthPercent() < 40.0f && !transfur_40)
         {
             DoCastSpellIfCan(m_creature, SPELL_TRANSFUR);
+            AssignRandomThreat();
+            transfur_40 = true;
             m_creature->SetVirtualItem(BASE_ATTACK, 0);
             m_creature->SetVirtualItem(OFF_ATTACK, 0);
             m_creature->SetVirtualItem(RANGED_ATTACK, 0);
             m_creature->SetDisplayId(11179);
             DoScriptText(SAY_TRANSITION_THE_HUNTER, m_creature);
-            AssignRandomThreat();
-            transfur_40 = true;
         }
 
         if (!m_creature->HasAura(SPELL_WHIRLWIND_AURA) && !transfur_40)
