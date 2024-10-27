@@ -10,17 +10,21 @@ struct instance_yharnam : public ScriptedInstance
 
     uint64 m_uiBloodStarvedBeastGUID;
     uint64 m_uiFatherGascoigneGUID;
+    uint64 m_uiLudwigGUID;
     uint32 m_uiSpawnChestOnAllBossDeath;
     bool   m_isBloodStarvedBeastDead;
     bool   m_isFatherGascoigneDead;
+    bool   m_isLudwigDead;
 
     void Initialize() override
     {
         m_uiBloodStarvedBeastGUID = 0;
         m_uiFatherGascoigneGUID = 0;
+        m_uiLudwigGUID = 0;
         m_uiSpawnChestOnAllBossDeath = 10000;
         m_isBloodStarvedBeastDead = false;
         m_isFatherGascoigneDead = false;
+        m_isLudwigDead = false;
     }
 
     void OnCreatureCreate(Creature* pCreature) override
@@ -32,6 +36,9 @@ struct instance_yharnam : public ScriptedInstance
                 break;
             case NPC_FATHER_GASCOIGNE:
                 m_uiFatherGascoigneGUID = pCreature->GetGUID();
+                break;
+            case NPC_LUDWIG:
+                m_uiLudwigGUID = pCreature->GetGUID();
                 break;
         }
     }
@@ -48,19 +55,23 @@ struct instance_yharnam : public ScriptedInstance
                 m_isFatherGascoigneDead = true;
                 m_uiSpawnChestOnAllBossDeath = 10000;
                 break;
+            case NPC_LUDWIG :
+                m_isLudwigDead = true;
+                m_uiSpawnChestOnAllBossDeath = 10000;
+                break;
         }
     }
 
     void Update(uint32 uiDiff) override
     {
         //spawn chest
-        if (m_isBloodStarvedBeastDead && m_isFatherGascoigneDead && m_uiSpawnChestOnAllBossDeath)
+        if (m_isBloodStarvedBeastDead && m_isFatherGascoigneDead && m_isLudwigDead && m_uiSpawnChestOnAllBossDeath)
         {
             if (m_uiSpawnChestOnAllBossDeath <= uiDiff)
             {
-                if (Creature* pFatherGascoigne = instance->GetCreature(m_uiFatherGascoigneGUID))
+                if (Creature* pLudwig = instance->GetCreature(m_uiLudwigGUID))
                 {
-                    pFatherGascoigne->SummonGameObject(GO_CHEST, -1095.44f, 2234.75f, 182.862f, 0.0f, 0, 0, 0, 0, 43200);
+                    pLudwig->SummonGameObject(GO_CHEST, -1095.44f, 2234.75f, 182.862f, 0.0f, 0, 0, 0, 0, 43200);
                     m_uiSpawnChestOnAllBossDeath = 0;
                 }
             }

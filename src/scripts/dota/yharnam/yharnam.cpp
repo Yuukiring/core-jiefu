@@ -41,6 +41,15 @@ enum
     SPELL_WHIRLWIND_AURA            = 34253,
     SPELL_TRANSFUR                  = 34255,
     SPELL_TRANSFUR_CHARM            = 34257,
+    //SPELL_LUDWIG
+    SPELL_CHARGE_20_P1              = 34258,
+    SPELL_CHARGE_30_P1              = 34259,
+    SPELL_CHARGE_40_P1              = 34260,
+    SPELL_STOMP_P1                  = 34261,
+    SPELL_THORNS_P1                 = 34262,
+    SPELL_DOUBLE_EDGED_SWORD_P2     = 34263,
+    SPELL_STOMP_P2                  = 34264,
+    SPELL_THORNS_P2                 = 34265,
     //SAY
     SAY_AGGRO_BLOOD_STARVED_BEAST           = -2000013,
     SAY_AGGRO_THE_HUNTER                    = -2000014,
@@ -781,6 +790,204 @@ CreatureAI* GetAI_Boss_FatherGascoigne(Creature* pCreature)
     return new Boss_FatherGascoigne(pCreature);
 }
 
+//boss_ludwig
+struct Boss_Ludwig : public ScriptedAI
+{
+    Boss_Ludwig(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        Reset();
+    }
+
+    uint32 STOMP_TIMER;
+    uint32 THORNS_TIMER;
+    bool charge_90;
+    bool charge_75;
+    bool charge_60;
+    bool transition_50;
+    bool double_edged_sword_45;
+    bool double_edged_sword_30;
+    bool double_edged_sword_15;
+
+    void Reset() override
+    {
+        STOMP_TIMER = 10000;
+        THORNS_TIMER = 1000;
+        charge_90 = false;
+        charge_75 = false;
+        charge_60 = false;
+        transition_50 = false;
+        double_edged_sword_45 = false;
+        double_edged_sword_30 = false;
+        double_edged_sword_15 = false;
+        m_creature->LoadEquipment(m_creature->GetCreatureInfo()->equipment_id, true);
+        m_creature->SetDisplayId(9418);
+    }
+
+    void JustDied(Unit* Killer) override
+    {
+        DoScriptText(SAY_DEATH_LUDWIG_THE_HOLY_BLADE, m_creature);
+    }
+
+    void Aggro(Unit* pWho) override
+    {
+        DoScriptText(SAY_AGGRO_LUDWIG_THE_HOLY_BLADE, m_creature);
+        m_creature->CallForHelp(90.0f);
+    }
+
+    void UpdateAI(uint32 const uiDiff) override
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->GetVictim())
+            return;
+
+        if (m_creature->GetHealthPercent() < 90.0f && !charge_90 && !transition_50)
+        {
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_FARTHEST, 0, nullptr, SELECT_FLAG_PLAYER))
+            {
+                float charge_distance = m_creature->GetDistance(pTarget);
+                if (charge_distance <= 20.0f)
+                {
+                    DoCastSpellIfCan(pTarget, SPELL_CHARGE_20_P1);
+                }
+                else if (charge_distance > 20.0f && charge_distance <= 30.0f)
+                {
+                    DoCastSpellIfCan(pTarget, SPELL_CHARGE_30_P1);
+                }
+                else if (charge_distance > 30.0f && charge_distance <= 40.0f)
+                {
+                    DoCastSpellIfCan(pTarget, SPELL_CHARGE_40_P1);
+                }
+                else if (charge_distance > 40.0f)
+                {
+                    DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_NEAREST, 0, nullptr, SELECT_FLAG_PLAYER), SPELL_CHARGE_40_P1);
+                }
+            }
+            charge_90 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 75.0f && !charge_75 && !transition_50)
+        {
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_FARTHEST, 0, nullptr, SELECT_FLAG_PLAYER))
+            {
+                float charge_distance = m_creature->GetDistance(pTarget);
+                if (charge_distance <= 20.0f)
+                {
+                    DoCastSpellIfCan(pTarget, SPELL_CHARGE_20_P1);
+                }
+                else if (charge_distance > 20.0f && charge_distance <= 30.0f)
+                {
+                    DoCastSpellIfCan(pTarget, SPELL_CHARGE_30_P1);
+                }
+                else if (charge_distance > 30.0f && charge_distance <= 40.0f)
+                {
+                    DoCastSpellIfCan(pTarget, SPELL_CHARGE_40_P1);
+                }
+                else if (charge_distance > 40.0f)
+                {
+                    DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_NEAREST, 0, nullptr, SELECT_FLAG_PLAYER), SPELL_CHARGE_40_P1);
+                }
+            }
+            charge_75 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 60.0f && !charge_60 && !transition_50)
+        {
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_FARTHEST, 0, nullptr, SELECT_FLAG_PLAYER))
+            {
+                float charge_distance = m_creature->GetDistance(pTarget);
+                if (charge_distance <= 20.0f)
+                {
+                    DoCastSpellIfCan(pTarget, SPELL_CHARGE_20_P1);
+                }
+                else if (charge_distance > 20.0f && charge_distance <= 30.0f)
+                {
+                    DoCastSpellIfCan(pTarget, SPELL_CHARGE_30_P1);
+                }
+                else if (charge_distance > 30.0f && charge_distance <= 40.0f)
+                {
+                    DoCastSpellIfCan(pTarget, SPELL_CHARGE_40_P1);
+                }
+                else if (charge_distance > 40.0f)
+                {
+                    DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_NEAREST, 0, nullptr, SELECT_FLAG_PLAYER), SPELL_CHARGE_40_P1);
+                }
+            }
+            charge_60 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 50.0f && !transition_50)
+        {
+            transition_50 = true;
+            m_creature->SetVirtualItem(BASE_ATTACK, 19854);
+            m_creature->SetVirtualItem(OFF_ATTACK, 0);
+            m_creature->SetVirtualItem(RANGED_ATTACK, 0);
+            m_creature->SetDisplayId(12373);
+            DoScriptText(SAY_TRANSITION_LUDWIG_THE_HOLY_BLADE, m_creature);
+        }
+
+        if (m_creature->GetHealthPercent() < 45.0f && !double_edged_sword_45 && transition_50)
+        {
+            DoCastSpellIfCan(m_creature->GetVictim(), SPELL_DOUBLE_EDGED_SWORD_P2);
+            double_edged_sword_45 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 30.0f && !double_edged_sword_30 && transition_50)
+        {
+            DoCastSpellIfCan(m_creature->GetVictim(), SPELL_DOUBLE_EDGED_SWORD_P2);
+            double_edged_sword_30 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 15.0f && !double_edged_sword_15 && transition_50)
+        {
+            DoCastSpellIfCan(m_creature->GetVictim(), SPELL_DOUBLE_EDGED_SWORD_P2);
+            double_edged_sword_15 = true;
+        }
+
+        if (!transition_50)
+        {
+            //STOMP_P1
+            if (STOMP_TIMER < uiDiff)
+            {
+                DoCastSpellIfCan(m_creature->GetVictim(), SPELL_STOMP_P1);
+                STOMP_TIMER = urand(25000,35000);
+            }
+            else STOMP_TIMER -= uiDiff;
+
+            //THORNS_P1
+            if (THORNS_TIMER < uiDiff)
+            {
+                DoCastSpellIfCan(m_creature, SPELL_THORNS_P1);
+                THORNS_TIMER = urand(15000,25000);
+            }
+            else THORNS_TIMER -= uiDiff;
+        }
+        else
+        {
+            //STOMP_P2
+            if (STOMP_TIMER < uiDiff)
+            {
+                DoCastSpellIfCan(m_creature->GetVictim(), SPELL_STOMP_P2);
+                STOMP_TIMER = urand(25000,35000);
+            }
+            else STOMP_TIMER -= uiDiff;
+
+            //THORNS_P2
+            if (THORNS_TIMER < uiDiff)
+            {
+                DoCastSpellIfCan(m_creature, SPELL_THORNS_P2);
+                THORNS_TIMER = urand(15000,25000);
+            }
+            else THORNS_TIMER -= uiDiff;
+        }
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_Boss_Ludwig(Creature* pCreature)
+{
+    return new Boss_Ludwig(pCreature);
+}
+
 void AddSC_yharnam()
 {
     Script* newscript;
@@ -828,5 +1035,10 @@ void AddSC_yharnam()
     newscript = new Script;
     newscript->Name = "boss_father_gascoigne";
     newscript->GetAI = &GetAI_Boss_FatherGascoigne;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "boss_ludwig";
+    newscript->GetAI = &GetAI_Boss_Ludwig;
     newscript->RegisterSelf();
 }
