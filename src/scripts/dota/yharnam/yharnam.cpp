@@ -50,6 +50,10 @@ enum
     SPELL_DOUBLE_EDGED_SWORD_P2     = 34263,
     SPELL_STOMP_P2                  = 34264,
     SPELL_THORNS_P2                 = 34265,
+    //SPELL_PUDGE
+    SPELL_POISONOUS_CLOUD           = 28240,
+    SPELL_DISMEMBER                 = 34267,
+    SPELL_ROT                       = 34269,
     //SAY
     SAY_AGGRO_BLOOD_STARVED_BEAST           = -2000013,
     SAY_AGGRO_THE_HUNTER                    = -2000014,
@@ -988,6 +992,88 @@ CreatureAI* GetAI_Boss_Ludwig(Creature* pCreature)
     return new Boss_Ludwig(pCreature);
 }
 
+//boss_pudge
+struct Boss_Pudge : public ScriptedAI
+{
+    Boss_Pudge(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        Reset();
+    }
+
+    uint32 DISMEMBER_TIMER;
+    bool poisonous_cloud_80;
+    bool poisonous_cloud_55;
+    bool poisonous_cloud_30;
+    bool poisonous_cloud_5;
+
+    void Reset() override
+    {
+        DISMEMBER_TIMER = 10000;
+        poisonous_cloud_80 = false;
+        poisonous_cloud_55 = false;
+        poisonous_cloud_30 = false;
+        poisonous_cloud_5 = false;
+        if (m_creature->HasAura(SPELL_ROT))
+            m_creature->RemoveAurasDueToSpell(SPELL_ROT);
+    }
+
+    void Aggro(Unit* pWho) override
+    {
+        DoCastSpellIfCan(m_creature, SPELL_ROT);
+    }
+
+    void UpdateAI(uint32 const uiDiff) override
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->GetVictim())
+            return;
+
+        //POISONOUS_CLOUD
+        if (m_creature->GetHealthPercent() < 80.0f && !poisonous_cloud_80)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_POISONOUS_CLOUD);
+            poisonous_cloud_80 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 55.0f && !poisonous_cloud_55)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_POISONOUS_CLOUD);
+            poisonous_cloud_55 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 30.0f && !poisonous_cloud_30)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_POISONOUS_CLOUD);
+            poisonous_cloud_30 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 5.0f && !poisonous_cloud_5)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_POISONOUS_CLOUD);
+            poisonous_cloud_5 = true;
+        }
+
+        //ROT
+        if (!m_creature->HasAura(SPELL_ROT))
+            DoCastSpellIfCan(m_creature, SPELL_ROT);
+
+        //DISMEMBER
+        if (DISMEMBER_TIMER < uiDiff)
+        {
+            DoCastSpellIfCan(m_creature->SelectAttackingTarget(ATTACKING_TARGET_NEAREST, 0, nullptr, SELECT_FLAG_PLAYER), SPELL_DISMEMBER);
+            DISMEMBER_TIMER = urand(25000,35000);
+            DoScriptText(SAY_AGGRO_PUDGE, m_creature);
+        }
+        else DISMEMBER_TIMER -= uiDiff;
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_Boss_Pudge(Creature* pCreature)
+{
+    return new Boss_Pudge(pCreature);
+}
+
 void AddSC_yharnam()
 {
     Script* newscript;
@@ -1040,5 +1126,10 @@ void AddSC_yharnam()
     newscript = new Script;
     newscript->Name = "boss_ludwig";
     newscript->GetAI = &GetAI_Boss_Ludwig;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "boss_pudge";
+    newscript->GetAI = &GetAI_Boss_Pudge;
     newscript->RegisterSelf();
 }

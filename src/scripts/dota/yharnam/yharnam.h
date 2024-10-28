@@ -13,6 +13,7 @@ enum
     NPC_BLOOD_STARVED_BEAST     = 200047,
     NPC_FATHER_GASCOIGNE        = 200048,
     NPC_LUDWIG                  = 200049,
+    NPC_PUDGE                   = 200051,
     GO_CHEST                    = 220002,
 };
 
