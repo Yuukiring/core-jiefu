@@ -14,7 +14,10 @@ enum
     NPC_FATHER_GASCOIGNE        = 200048,
     NPC_LUDWIG                  = 200049,
     NPC_PUDGE                   = 200051,
+    NPC_GEHRMAN                 = 200052,
+    NPC_MOON_PRESENCE           = 200053,
     GO_CHEST                    = 220002,
+    SAY_AGGRO_MOON_PRESENCE     = -2000017,
 };
 
 #endif

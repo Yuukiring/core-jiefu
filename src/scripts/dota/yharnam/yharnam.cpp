@@ -54,12 +54,16 @@ enum
     SPELL_POISONOUS_CLOUD           = 28240,
     SPELL_DISMEMBER                 = 34267,
     SPELL_ROT                       = 34269,
+    //SPELL_GEHRMAN
+    SPELL_BLOODBORNE                = 34271,
+    SPELL_ANTIGUN_GEHRMAN           = 34273,
+    SPELL_BLOOD_MOON                = 34274,
+    SPELL_VISION                    = 34275,
     //SAY
     SAY_AGGRO_BLOOD_STARVED_BEAST           = -2000013,
     SAY_AGGRO_THE_HUNTER                    = -2000014,
     SAY_AGGRO_PUDGE                         = -2000015,
     SAY_AGGRO_THE_FIRST_HUNTER              = -2000016,
-    SAY_AGGRO_MOON_PRESENCE                 = -2000017,
     SAY_AGGRO_LUDWIG_THE_HOLY_BLADE         = -2000018,
     SAY_TRANSITION_THE_HUNTER               = -2000019,
     SAY_DEATH_THE_HUNTER                    = -2000020,
@@ -1074,6 +1078,106 @@ CreatureAI* GetAI_Boss_Pudge(Creature* pCreature)
     return new Boss_Pudge(pCreature);
 }
 
+//boss_gehrman
+struct Boss_Gehrman : public ScriptedAI
+{
+    Boss_Gehrman(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        Reset();
+    }
+
+    uint32 ANTIGUN_GEHRMAN_TIMER;
+    bool blood_moon_75;
+    bool blood_moon_50;
+    bool blood_moon_25;
+    bool vision_35;
+
+    void Reset() override
+    {
+        ANTIGUN_GEHRMAN_TIMER = 1000;
+        blood_moon_75 = false;
+        blood_moon_50 = false;
+        blood_moon_25 = false;
+        vision_35 = false;
+        if (m_creature->HasAura(SPELL_BLOODBORNE))
+            m_creature->RemoveAurasDueToSpell(SPELL_BLOODBORNE);
+        if (m_creature->HasAura(SPELL_VISION))
+            m_creature->RemoveAurasDueToSpell(SPELL_VISION);
+    }
+
+    void JustDied(Unit* Killer) override
+    {
+        DoScriptText(SAY_DEATH_THE_FIRST_HUNTER, m_creature);
+    }
+
+    void Aggro(Unit* pWho) override
+    {
+        DoCastSpellIfCan(m_creature, SPELL_BLOODBORNE);
+        m_creature->CallForHelp(VISIBLE_RANGE);
+        DoScriptText(SAY_AGGRO_THE_FIRST_HUNTER, m_creature);
+    }
+
+    void UpdateAI(uint32 const uiDiff) override
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->GetVictim())
+            return;
+
+        //BLOOD_MOON && VISION
+        if (m_creature->GetHealthPercent() < 75.0f && !blood_moon_75)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_BLOOD_MOON);
+            blood_moon_75 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 50.0f && !blood_moon_50)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_BLOOD_MOON);
+            blood_moon_50 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 35.0f && !vision_35)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_VISION);
+            vision_35 = true;
+        }
+
+        if (m_creature->GetHealthPercent() < 25.0f && !blood_moon_25)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_BLOOD_MOON);
+            blood_moon_25 = true;
+        }
+
+        //BLOODBORNE
+        if (!m_creature->HasAura(SPELL_BLOODBORNE))
+            DoCastSpellIfCan(m_creature, SPELL_BLOODBORNE);
+
+        //ANTIGUN_GEHRMAN
+        if (!blood_moon_75 || blood_moon_25)
+        {
+            if (ANTIGUN_GEHRMAN_TIMER < uiDiff)
+            {
+                if (Unit* pTarget = m_creature->GetVictim())
+                {
+                    float antigun_gehrman_distance = m_creature->GetDistance(pTarget);
+                    if (antigun_gehrman_distance >= 8.0f && antigun_gehrman_distance <= 40.0f)
+                    {
+                        DoCastSpellIfCan(pTarget, SPELL_ANTIGUN_GEHRMAN);
+                        ANTIGUN_GEHRMAN_TIMER = urand(7000,9000);
+                    }
+                }
+            }
+            else ANTIGUN_GEHRMAN_TIMER -= uiDiff;
+        }
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_Boss_Gehrman(Creature* pCreature)
+{
+    return new Boss_Gehrman(pCreature);
+}
+
 void AddSC_yharnam()
 {
     Script* newscript;
@@ -1131,5 +1235,10 @@ void AddSC_yharnam()
     newscript = new Script;
     newscript->Name = "boss_pudge";
     newscript->GetAI = &GetAI_Boss_Pudge;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "boss_gehrman";
+    newscript->GetAI = &GetAI_Boss_Gehrman;
     newscript->RegisterSelf();
 }

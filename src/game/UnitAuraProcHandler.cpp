@@ -882,6 +882,15 @@ SpellAuraProcResult Unit::HandleDummyAuraProc(Unit* pVictim, uint32 amount, uint
                     triggered_spell_id = 34150;
                     break;                               // no hidden cooldown
                 }
+                // Bloodborne Gehrman blood drain + 100%
+                case 34271:
+                {
+                    // heal amount
+                    basepoints[0] = dither(triggerAmount * amount / 100);
+                    target = this;
+                    triggered_spell_id = 34272;
+                    break;                               // no hidden cooldown
+                }
                 // Obsidian Armor (Justice Bearer`s Pauldrons shoulder)
                 case 27539:
                 {
