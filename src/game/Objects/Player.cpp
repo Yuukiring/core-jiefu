@@ -2708,6 +2708,8 @@ void Player::RewardRage(uint32 damage, bool attacker)
         if (HasAura(18499, EFFECT_INDEX_0))
             addRage *= 1.3f;
     }
+    // 34142 34143 effect
+    addRage *= (HasAura_34142_34143_total() * 0.01f + 1.0f);
 
     addRage *= sWorld.getConfig(CONFIG_FLOAT_RATE_POWER_RAGE_INCOME);
 
