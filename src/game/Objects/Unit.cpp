@@ -4246,6 +4246,20 @@ Aura* Unit::GetAura(AuraType type, SpellFamily family, uint64 familyFlag, Object
     return nullptr;
 }
 
+int32 Unit::HasAura_34140_34141_total() const
+{
+    int32 total = 0;
+    AuraList const& mTotalAuraList = GetAurasByType(SPELL_AURA_MOD_INCREASE_ENERGY);
+    for (const auto& i : mTotalAuraList)
+    {
+        if (i->GetId() == 34140)
+            total += 2;
+        else if (i->GetId() == 34141)
+            total += 4;
+    }
+    return total;
+}
+
 int32 Unit::HasAura_34142_34143_total() const
 {
     int32 total = 0;

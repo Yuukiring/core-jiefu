@@ -2803,6 +2803,8 @@ void Player::Regenerate(Powers power)
         {
             float EnergyRate = sWorld.getConfig(CONFIG_FLOAT_RATE_POWER_ENERGY);
             addvalue = 20 * EnergyRate;
+            // 34140 34141 effect
+            addvalue *= (HasAura_34140_34141_total() * 0.01f + 1.0f);
             break;
         }
         case POWER_FOCUS:

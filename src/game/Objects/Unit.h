@@ -830,6 +830,7 @@ class Unit : public SpellCaster
             return m_spellAuraHolders.equal_range(spellId);
         }
 
+        int32 HasAura_34140_34141_total() const;
         int32 HasAura_34142_34143_total() const;
         bool HasAuraType(AuraType auraType) const;
         bool HasAuraTypeByCaster(AuraType auraType, ObjectGuid casterGuid) const;
