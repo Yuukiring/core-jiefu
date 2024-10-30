@@ -802,6 +802,14 @@ void Spell::EffectDummy(SpellEffectIndex effIdx)
                     static_cast<Player*>(m_caster)->CastCustomSpell(static_cast<Player*>(m_caster), 34205, static_cast<uint32>(static_cast<Player*>(m_caster)->GetPower(POWER_MANA) * 0.1f), {}, {}, true);
                     return;
                 }
+                case 34281:
+                {
+                    if (m_caster->GetTypeId() != TYPEID_PLAYER)
+                        return;
+                    // petdamage
+                    static_cast<Player*>(m_caster)->CastCustomSpell(static_cast<Player*>(m_caster), 34282, static_cast<uint32>(static_cast<Player*>(m_caster)->HasAura_34165_34166_total()), {}, {}, true);
+                    return;
+                }
                 case 8344: // Universal Remote
                 {
                     if (!m_originalCaster)
