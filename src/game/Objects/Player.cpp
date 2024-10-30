@@ -2791,6 +2791,8 @@ void Player::Regenerate(Powers power)
             }
             else
                 addvalue = m_modManaRegen * ManaIncreaseRate * 2.00f;
+            // 34155 34156 effect
+            addvalue *= (HasAura_34155_34156_total() * 0.01f + 1.0f);
         }
         break;
         case POWER_RAGE:                                    // Regenerate rage

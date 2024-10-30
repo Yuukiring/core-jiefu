@@ -4274,6 +4274,20 @@ int32 Unit::HasAura_34142_34143_total() const
     return total;
 }
 
+int32 Unit::HasAura_34155_34156_total() const
+{
+    int32 total = 0;
+    AuraList const& mTotalAuraList = GetAurasByType(SPELL_AURA_MOD_INCREASE_ENERGY);
+    for (const auto& i : mTotalAuraList)
+    {
+        if (i->GetId() == 34155)
+            total += 2;
+        else if (i->GetId() == 34156)
+            total += 4;
+    }
+    return total;
+}
+
 bool Unit::HasAura(uint32 spellId, SpellEffectIndex effIndex) const
 {
     SpellAuraHolderConstBounds spair = GetSpellAuraHolderBounds(spellId);
