@@ -1087,18 +1087,16 @@ struct Boss_Gehrman : public ScriptedAI
     }
 
     uint32 ANTIGUN_GEHRMAN_TIMER;
-    bool blood_moon_75;
-    bool blood_moon_50;
-    bool blood_moon_25;
-    bool vision_35;
+    bool blood_moon_90;
+    bool blood_moon_65;
+    bool vision_40;
 
     void Reset() override
     {
         ANTIGUN_GEHRMAN_TIMER = 1000;
-        blood_moon_75 = false;
-        blood_moon_50 = false;
-        blood_moon_25 = false;
-        vision_35 = false;
+        blood_moon_90 = false;
+        blood_moon_65 = false;
+        vision_40 = false;
         if (m_creature->HasAura(SPELL_BLOODBORNE))
             m_creature->RemoveAurasDueToSpell(SPELL_BLOODBORNE);
         if (m_creature->HasAura(SPELL_VISION))
@@ -1123,28 +1121,22 @@ struct Boss_Gehrman : public ScriptedAI
             return;
 
         //BLOOD_MOON && VISION
-        if (m_creature->GetHealthPercent() < 75.0f && !blood_moon_75)
+        if (m_creature->GetHealthPercent() < 90.0f && !blood_moon_90)
         {
             DoCastSpellIfCan(m_creature, SPELL_BLOOD_MOON);
-            blood_moon_75 = true;
+            blood_moon_90 = true;
         }
 
-        if (m_creature->GetHealthPercent() < 50.0f && !blood_moon_50)
+        if (m_creature->GetHealthPercent() < 65.0f && !blood_moon_65)
         {
             DoCastSpellIfCan(m_creature, SPELL_BLOOD_MOON);
-            blood_moon_50 = true;
+            blood_moon_65 = true;
         }
 
-        if (m_creature->GetHealthPercent() < 35.0f && !vision_35)
+        if (m_creature->GetHealthPercent() < 40.0f && !vision_40)
         {
             DoCastSpellIfCan(m_creature, SPELL_VISION);
-            vision_35 = true;
-        }
-
-        if (m_creature->GetHealthPercent() < 25.0f && !blood_moon_25)
-        {
-            DoCastSpellIfCan(m_creature, SPELL_BLOOD_MOON);
-            blood_moon_25 = true;
+            vision_40 = true;
         }
 
         //BLOODBORNE
@@ -1152,7 +1144,7 @@ struct Boss_Gehrman : public ScriptedAI
             DoCastSpellIfCan(m_creature, SPELL_BLOODBORNE);
 
         //ANTIGUN_GEHRMAN
-        if (!blood_moon_75 || blood_moon_25)
+        if (!blood_moon_90 || blood_moon_65)
         {
             if (ANTIGUN_GEHRMAN_TIMER < uiDiff)
             {
@@ -1162,7 +1154,7 @@ struct Boss_Gehrman : public ScriptedAI
                     if (antigun_gehrman_distance >= 8.0f && antigun_gehrman_distance <= 40.0f)
                     {
                         DoCastSpellIfCan(pTarget, SPELL_ANTIGUN_GEHRMAN);
-                        ANTIGUN_GEHRMAN_TIMER = urand(7000,9000);
+                        ANTIGUN_GEHRMAN_TIMER = urand(5500,6500);
                     }
                 }
             }
