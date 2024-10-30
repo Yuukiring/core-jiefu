@@ -4277,7 +4277,7 @@ int32 Unit::HasAura_34142_34143_total() const
 int32 Unit::HasAura_34155_34156_total() const
 {
     int32 total = 0;
-    AuraList const& mTotalAuraList = GetAurasByType(SPELL_AURA_MOD_INCREASE_ENERGY);
+    AuraList const& mTotalAuraList = GetAurasByType(SPELL_AURA_MOD_INCREASE_ENERGY_PERCENT);
     for (const auto& i : mTotalAuraList)
     {
         if (i->GetId() == 34155)
@@ -4291,7 +4291,7 @@ int32 Unit::HasAura_34155_34156_total() const
 int32 Unit::HasAura_34165_34166_total() const
 {
     int32 total = 0;
-    AuraList const& mTotalAuraList = GetAurasByType(SPELL_AURA_MOD_INCREASE_ENERGY);
+    AuraList const& mTotalAuraList = GetAurasByType(SPELL_AURA_MOD_TOTAL_STAT_PERCENTAGE);
     for (const auto& i : mTotalAuraList)
     {
         if (i->GetId() == 34165)
