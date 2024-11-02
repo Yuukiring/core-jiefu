@@ -1023,14 +1023,12 @@ bool ChatHandler::HandlePartyBotLoadCommand(char* args)
         return false;
     }
 
-    if (Player* pHardcorechallenger = sObjectMgr.GetPlayer(guid))
+    std::unique_ptr<QueryResult> result(CharacterDatabase.PQuery("SELECT `account` FROM `characters` WHERE `guid` = '%u' AND `name` = '%s' AND `level` < 60 AND EXISTS(SELECT 1 FROM `character_queststatus` WHERE `guid` = '%u' AND `quest` = 10000 AND `status` = 1)", guid, name, guid));
+    if (result)
     {
-        if(pHardcorechallenger->GetLevel() < 60 && pHardcorechallenger->GetQuestStatus(10000) == QUEST_STATUS_COMPLETE)
-        {
-            SendSysMessage("Hardcore Challenger Can Not Be Loaded As Party Bot.");
-            SetSentErrorMessage(true);
-            return false;
-        }
+        SendSysMessage("Hardcore Challenger Can Not Be Loaded As Party Bot.");
+        SetSentErrorMessage(true);
+        return false;
     }
 
     float x, y, z;
