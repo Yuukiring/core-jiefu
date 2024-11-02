@@ -1023,6 +1023,16 @@ bool ChatHandler::HandlePartyBotLoadCommand(char* args)
         return false;
     }
 
+    if (Player* pHardcorechallenger = sObjectMgr.GetPlayer(guid))
+    {
+        if(pHardcorechallenger->GetLevel() < 60 && pHardcorechallenger->GetQuestStatus(10000) == QUEST_STATUS_COMPLETE)
+        {
+            SendSysMessage("Hardcore Challenger Can Not Be Loaded As Party Bot.");
+            SetSentErrorMessage(true);
+            return false;
+        }
+    }
+
     float x, y, z;
     pPlayer->GetNearPoint(pPlayer, x, y, z, 0, 5.0f, frand(0.0f, 6.0f));
 
