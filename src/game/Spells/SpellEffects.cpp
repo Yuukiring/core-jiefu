@@ -440,12 +440,12 @@ void Spell::EffectSchoolDMG(SpellEffectIndex effect_idx)
                 }
                 // Shield Slam
                 else if (m_spellInfo->IsFitToFamilyMask<CF_WARRIOR_SHIELD_SLAM>())
-                    // Warrior - Shield Slam : damage bonus 15% max health
-                    damage = damage + m_casterUnit->GetShieldBlockValue() + (m_casterUnit->GetMaxHealth() * 0.15f);
+                    // Warrior - Shield Slam : damage bonus 7.5% max health
+                    damage = damage + m_casterUnit->GetShieldBlockValue() + (m_casterUnit->GetMaxHealth() * 0.075f);
                 // Revenge
                 else if (m_spellInfo->IsFitToFamilyMask<CF_WARRIOR_REVENGE>())
-                    // Warrior - Revenge : damage bonus 10% armor
-                    damage = damage + (m_casterUnit->GetArmor() * 0.1f);
+                    // Warrior - Revenge : damage bonus 5% armor
+                    damage = damage + (m_casterUnit->GetArmor() * 0.05f);
                 // Execute trigger
                 else if (m_spellInfo->Id == 20647)
                     m_casterUnit->SetPower(POWER_RAGE, 0);
@@ -520,9 +520,9 @@ void Spell::EffectSchoolDMG(SpellEffectIndex effect_idx)
                 // Swipe
                 else if (m_spellInfo->Id == 779 || m_spellInfo->Id == 780 || m_spellInfo->Id == 769 || m_spellInfo->Id == 9754 || m_spellInfo->Id == 9908)
                 {
-                    // DRUID - Swipe : damage bonus 2.5% self and target armor
+                    // DRUID - Swipe : damage bonus 3.5% self and target armor
                     if (unitTarget)
-                        damage += (m_casterUnit->GetArmor() + (unitTarget->GetArmor() > m_casterUnit->GetArmor() ? m_casterUnit->GetArmor() : unitTarget->GetArmor())) * 0.025f;
+                        damage += (m_casterUnit->GetArmor() + (unitTarget->GetArmor() > m_casterUnit->GetArmor() ? m_casterUnit->GetArmor() : unitTarget->GetArmor())) * 0.035f;
                 }
                 // Rake
                 else if (m_spellInfo->Id == 1822 || m_spellInfo->Id == 1823 || m_spellInfo->Id == 1824 || m_spellInfo->Id == 9904)
@@ -550,12 +550,12 @@ void Spell::EffectSchoolDMG(SpellEffectIndex effect_idx)
             {
                 // Counterattack
                 if (m_spellInfo->Id == 19306 || m_spellInfo->Id == 20909 || m_spellInfo->Id == 20910)
-                    // HUNTER - Counterattack : damage bonus 45% attack power
-                    damage = damage + (m_casterUnit->GetTotalAttackPowerValue(BASE_ATTACK) * 0.45f);
+                    // HUNTER - Counterattack : damage bonus 50% attack power
+                    damage = damage + (m_casterUnit->GetTotalAttackPowerValue(BASE_ATTACK) * 0.5f);
                 // Mongoose Bite
                 else if (m_spellInfo->Id == 1495 || m_spellInfo->Id == 14269 || m_spellInfo->Id == 14270 || m_spellInfo->Id == 14271)
-                    // HUNTER - Mongoose Bite : damage bonus 60% attack power
-                    damage = damage + (m_casterUnit->GetTotalAttackPowerValue(BASE_ATTACK) * 0.6f);
+                    // HUNTER - Mongoose Bite : damage bonus 75% attack power
+                    damage = damage + (m_casterUnit->GetTotalAttackPowerValue(BASE_ATTACK) * 0.75f);
                 break;
             }
             case SPELLFAMILY_PALADIN:
