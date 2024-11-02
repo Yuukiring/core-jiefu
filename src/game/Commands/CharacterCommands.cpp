@@ -2043,7 +2043,8 @@ bool ChatHandler::HandleCharacterPremadeGearCommand(char* args)
         return false;
     }
 
-    if (!pPlayer->IsBot() && !m_session->GetPlayer()->IsGameMaster())
+    std::unique_ptr<QueryResult> result(CharacterDatabase.PQuery("SELECT `account` FROM `characters` WHERE `guid` = '%u' and `name` = '%s'", sObjectMgr.GetPlayerGuidByName(pPlayer->GetName()).GetCounter(), pPlayer->GetName()));
+    if ((!pPlayer->IsBot() || result) && !m_session->GetPlayer()->IsGameMaster())
     {
         PSendSysMessage("Permission denied.");
         return false;
