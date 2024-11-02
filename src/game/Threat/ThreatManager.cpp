@@ -409,6 +409,7 @@ void ThreatManager::addThreat(Unit* pVictim, float threat, bool crit, SpellSchoo
 
     // mod spell no threat
     if (pThreatSpell && (pThreatSpell->Id == 34002 ||
+                         pThreatSpell->Id == 34011 ||
                          pThreatSpell->Id == 34012 ||
                          pThreatSpell->Id == 34013 ||
                          pThreatSpell->Id == 34014 ||

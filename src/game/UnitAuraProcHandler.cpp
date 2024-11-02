@@ -786,6 +786,32 @@ SpellAuraProcResult Unit::HandleDummyAuraProc(Unit* pVictim, uint32 amount, uint
                     target = this;
                     break;
                 }
+                // Hunter: Headshot
+                case 34010:
+                {
+                    if (this->GetTypeId() != TYPEID_PLAYER)
+                        return SPELL_AURA_PROC_FAILED;
+                    if (!pVictim)
+                        return SPELL_AURA_PROC_FAILED;
+                    float headshot_distance = this->GetDistance(pVictim);
+                    float distance_coefficient = 0.0f;
+                    if (headshot_distance >= 8.0f && headshot_distance <= 20.0f)
+                    {
+                        distance_coefficient = 1.0f;
+                    }
+                    else if (headshot_distance > 20.0f && headshot_distance <= 35.0f)
+                    {
+                        distance_coefficient = 1.5f;
+                    }
+                    else if (headshot_distance > 35.0f && headshot_distance <= 50.0f)
+                    {
+                        distance_coefficient = 2.0f;
+                    }
+                    basepoints[0] = (dither(this->GetMaxHealth() * 0.5f) >= dither((pVictim->GetHealth() * 0.04f + this->GetTotalAttackPowerValue(RANGED_ATTACK)) * distance_coefficient)) ? dither((pVictim->GetHealth() * 0.04f + this->GetTotalAttackPowerValue(RANGED_ATTACK)) * distance_coefficient) : dither(this->GetMaxHealth() * 0.5f);
+                    target = pVictim;
+                    triggered_spell_id = 34011;
+                    break;                               // no hidden cooldown
+                }
                 // Shaman: thundercloud
                 case 34206:
                 {
