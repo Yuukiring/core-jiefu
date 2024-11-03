@@ -767,7 +767,7 @@ bool ChatHandler::PartyBotAddRequirementCheck(Player const* pPlayer, Player cons
     // Hardcore Challenger Can Not Add Bots
     if (sWorld.getConfig(CONFIG_HARDCORECHALLENGER_BAN_PARTYBOT) == 1 && pPlayer->GetLevel()<60 && pPlayer->GetQuestStatus(10000) == QUEST_STATUS_COMPLETE)
     {
-        SendSysMessage("Hardcore Challenger Cannot add bots.");
+        SendSysMessage("Hardcore Challenger Can Not Add Bots.");
         return false;
     }
 
@@ -1000,6 +1000,14 @@ bool ChatHandler::HandlePartyBotLoadCommand(char* args)
     if (!pPlayer)
         return false;
 
+    // Hardcore Challenger Can Not Add Bots
+    if (sWorld.getConfig(CONFIG_HARDCORECHALLENGER_BAN_PARTYBOT) == 1 && pPlayer->GetLevel()<60 && pPlayer->GetQuestStatus(10000) == QUEST_STATUS_COMPLETE)
+    {
+        SendSysMessage("Hardcore Challenger Can Not Add Bots.");
+        SetSentErrorMessage(true);
+        return false;
+    }
+
     std::string name = ExtractPlayerNameFromLink(&args);
     if (name.empty())
     {
@@ -1023,6 +1031,7 @@ bool ChatHandler::HandlePartyBotLoadCommand(char* args)
         return false;
     }
 
+    // Hardcore Challenger Can Not Be Loaded As Party Bot
     std::unique_ptr<QueryResult> result(CharacterDatabase.PQuery("SELECT `account` FROM `characters` WHERE `guid` = '%u' AND `name` = '%s' AND `level` < 60 AND EXISTS(SELECT 1 FROM `character_queststatus` WHERE `guid` = '%u' AND `quest` = 10000 AND `status` = 1)", guid, name, guid));
     if (result)
     {
