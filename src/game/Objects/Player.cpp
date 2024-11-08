@@ -3495,6 +3495,9 @@ void Player::GiveXP(uint32 xp, Unit const* victim)
         xp /= 2;
 #endif
 
+    if (GetPersonalXpRate() >= 0.0f)
+        xp *= GetPersonalXpRate();
+
     if (xp < 1)
         return;
 
@@ -6795,7 +6798,7 @@ void Player::CheckAreaExploreAndOutdoor()
             uint32 xp = 0;
             if (p->AreaLevel > 0 && GetLevel() < sWorld.getConfig(CONFIG_UINT32_MAX_PLAYER_LEVEL))
             {
-                float const explorationRate = GetPersonalXpRate() >= 0.0f ? GetPersonalXpRate() : sWorld.getConfig(CONFIG_FLOAT_RATE_XP_EXPLORE);
+                float const explorationRate = sWorld.getConfig(CONFIG_FLOAT_RATE_XP_EXPLORE);
                 int32 const diff = int32(GetLevel()) - p->AreaLevel;
                 if (diff < -5)
                     xp = uint32(sObjectMgr.GetBaseXP(GetLevel() + 5) * explorationRate);
@@ -13745,7 +13748,7 @@ void Player::RewardQuest(Quest const* pQuest, uint32 reward, WorldObject* questE
     q_status.m_reward_choice = pQuest->RewChoiceItemId[reward];
 
     // Used for client inform but rewarded only in case not max level
-    uint32 xp = uint32(pQuest->XPValue(this) * (GetPersonalXpRate() >= 0.0f ? GetPersonalXpRate() : sWorld.getConfig(CONFIG_FLOAT_RATE_XP_QUEST)));
+    uint32 xp = uint32(pQuest->XPValue(this) * sWorld.getConfig(CONFIG_FLOAT_RATE_XP_QUEST));
 
     if (GetLevel() < sWorld.getConfig(CONFIG_UINT32_MAX_PLAYER_LEVEL))
         GiveXP(xp , nullptr);
