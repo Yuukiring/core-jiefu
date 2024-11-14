@@ -623,7 +623,6 @@ void Group::Disband(bool hideDestroy, ObjectGuid initiator)
         CharacterDatabase.BeginTransaction(m_Id);
         CharacterDatabase.PExecute("DELETE FROM `groups` WHERE `group_id`='%u'", m_Id);
         CharacterDatabase.PExecute("DELETE FROM `group_member` WHERE `group_id`='%u'", m_Id);
-        CharacterDatabase.CommitTransaction();
 
         // transfer instance save to last player in dungeon
         if (remainingPlayer)
@@ -641,6 +640,7 @@ void Group::Disband(bool hideDestroy, ObjectGuid initiator)
         }
 
         ResetInstances(INSTANCE_RESET_GROUP_DISBAND, nullptr);
+        CharacterDatabase.CommitTransaction();
     }
 
     _updateLeaderFlag(true);
