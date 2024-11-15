@@ -1,5 +1,6 @@
 #include "scriptPCH.h"
 #include "emerald_sanctum.h"
+#include "Group.h"
 
 struct instance_emerald_sanctum : public ScriptedInstance
 {
@@ -35,6 +36,34 @@ struct instance_emerald_sanctum : public ScriptedInstance
         m_isWarlockDead = false;
     }
 
+    uint32 getTodayStartTimestamp()
+    {
+        time_t rawtime = time(NULL);
+        struct tm *timeinfo = localtime(&rawtime);
+        timeinfo->tm_hour = 0;
+        timeinfo->tm_min = 0;
+        timeinfo->tm_sec = 0;
+        return mktime(timeinfo);
+    }
+
+    void OnPlayerEnter(Player* pPlayer) override
+    {
+        if (!pPlayer)
+            return;
+        if (pPlayer->IsBot())
+            return;
+        if (pPlayer->HasAura(34291))
+            return;
+        uint32 todayStart = getTodayStartTimestamp();
+        uint32 todayEnd = todayStart + 86399;
+        std::unique_ptr<QueryResult> result = CharacterDatabase.PQuery("SELECT 1 FROM `character_dota_instance` WHERE `guid`='%u' and `map_id`='%u' and `timer`>='%u' and `timer`<='%u' and `instance_id`<>'%u'", pPlayer->GetObjectGuid(), pPlayer->GetMapId(), todayStart, todayEnd, pPlayer->GetInstanceId());
+        if (result)
+        {
+            pPlayer->AddAura(34291);
+            pPlayer->GetSession()->SendNotification("%s can enter map %u only once a day.", pPlayer->GetName(), pPlayer->GetMapId());
+        }
+    }
+
     void OnCreatureCreate(Creature* pCreature) override
     {
         switch (pCreature->GetEntry())
@@ -54,6 +83,35 @@ struct instance_emerald_sanctum : public ScriptedInstance
         }
     }
 
+    uint32 getTimestamp()
+    {
+        time_t rawtime = time(NULL);
+        struct tm *timeinfo = localtime(&rawtime);
+        return mktime(timeinfo);
+    }
+
+    void DotaInstance(Creature *who)
+    {
+        if (Player* pLootRecepient = who->GetLootRecipient())
+        {
+            if (Group* pGroup = pLootRecepient->GetGroup())
+            {
+                for (GroupReference *itr = pGroup->GetFirstMember(); itr != nullptr; itr = itr->next())
+                {
+                    Player* pGroupGuy = itr->getSource();
+                    if (!pGroupGuy || !pGroupGuy->IsInWorld())
+                        continue;
+                    std::unique_ptr<QueryResult> result(CharacterDatabase.PQuery("SELECT 1 FROM `characters` WHERE `guid` = '%u' and `name` = '%s'", pGroupGuy->GetObjectGuid(), pGroupGuy->GetName()));
+                    if (!result)
+                        continue;
+                    CharacterDatabase.PExecute("replace into `character_dota_instance` (`guid`, `map_id`, `instance_id`, `timer`) VALUES (%u, %u, %u, %u)", pGroupGuy->GetObjectGuid(), pGroupGuy->GetMapId(), pGroupGuy->GetInstanceId(), getTimestamp());
+                }
+            }
+            else
+                CharacterDatabase.PExecute("replace into `character_dota_instance` (`guid`, `map_id`, `instance_id`, `timer`) VALUES (%u, %u, %u, %u)", pLootRecepient->GetObjectGuid(), pLootRecepient->GetMapId(), pLootRecepient->GetInstanceId(), getTimestamp());
+        }
+    }
+
     void OnCreatureDeath(Creature *who) override
     {
         switch (who->GetEntry())
@@ -62,20 +120,24 @@ struct instance_emerald_sanctum : public ScriptedInstance
                 m_isDragonKnightGreenDead = true;
                 m_uiSpawnWarlockOnDragonKnightsDeath = 5000;
                 m_uiDragonKnightDeathCount += 1;
+                DotaInstance(who);
                 break;
             case NPC_DRAGON_KNIGHT_RED :
                 m_isDragonKnightRedDead = true;
                 m_uiSpawnWarlockOnDragonKnightsDeath = 5000;
                 m_uiDragonKnightDeathCount += 1;
+                DotaInstance(who);
                 break;
             case NPC_DRAGON_KNIGHT_BLUE :
                 m_isDragonKnightBlueDead = true;
                 m_uiSpawnWarlockOnDragonKnightsDeath = 5000;
                 m_uiDragonKnightDeathCount += 1;
+                DotaInstance(who);
                 break;
             case NPC_WARLOCK :
                 m_isWarlockDead = true;
                 m_uiSpawnChestOnWarlockDeath = 10000;
+                DotaInstance(who);
                 break;
         }
     }
