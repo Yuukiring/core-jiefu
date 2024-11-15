@@ -639,8 +639,8 @@ void Group::Disband(bool hideDestroy, ObjectGuid initiator)
             }
         }
 
-        ResetInstances(INSTANCE_RESET_GROUP_DISBAND, nullptr);
         CharacterDatabase.CommitTransaction();
+        ResetInstances(INSTANCE_RESET_GROUP_DISBAND, nullptr);
     }
 
     _updateLeaderFlag(true);
