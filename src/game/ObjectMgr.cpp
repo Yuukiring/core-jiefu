@@ -5348,8 +5348,8 @@ void ObjectMgr::LoadQuests()
                           "`IncompleteEmote`, `CompleteEmote`, `OfferRewardEmote1`, `OfferRewardEmote2`, `OfferRewardEmote3`, `OfferRewardEmote4`,"
     //                      119                       120                       121                       122
                           "`OfferRewardEmoteDelay1`, `OfferRewardEmoteDelay2`, `OfferRewardEmoteDelay3`, `OfferRewardEmoteDelay4`,"
-    //                      123            124               125         126             127      128                  129
-                          "`StartScript`, `CompleteScript`, `MaxLevel`, `RewMailMoney`, `RewXP`, `RequiredCondition`, `BreadcrumbForQuestId` "
+    //                      123            124               125         126             127      128                  129                     130
+                          "`StartScript`, `CompleteScript`, `MaxLevel`, `RewMailMoney`, `RewXP`, `RequiredCondition`, `BreadcrumbForQuestId`, `RewRepSpilloverMask`"
                           " FROM `quest_template` t1 WHERE `patch`=(SELECT max(`patch`) FROM `quest_template` t2 WHERE t1.`entry`=t2.`entry` && `patch` <= %u)", sWorld.GetWowPatch()));
     if (!result)
     {
@@ -5821,11 +5821,20 @@ void ObjectMgr::LoadQuests()
                     qinfo->RewRepFaction[j] = 0;            // quest will not reward this
                 }
             }
-            else if (qinfo->RewRepValue[j] != 0)
+            else
             {
-                sLog.Out(LOG_DBERROR, LOG_LVL_MINIMAL, "Quest %u has `RewRepFaction%d` = 0 but `RewRepValue%d` = %i.",
-                                qinfo->GetQuestId(), j + 1, j + 1, qinfo->RewRepValue[j]);
-                // no changes, quest ignore this data
+                if (qinfo->RewRepSpilloverMask & (1 << j))
+                {
+                    sLog.Out(LOG_DBERROR, LOG_LVL_MINIMAL, "Quest %u has `RewRepFaction%d` = 0 but `RewRepSpilloverMask` is set for this index.",
+                        qinfo->GetQuestId(), j + 1);
+                    // no changes, quest ignore this data
+                }
+                if (qinfo->RewRepValue[j] != 0)
+                {
+                    sLog.Out(LOG_DBERROR, LOG_LVL_MINIMAL, "Quest %u has `RewRepFaction%d` = 0 but `RewRepValue%d` = %i.",
+                        qinfo->GetQuestId(), j + 1, j + 1, qinfo->RewRepValue[j]);
+                    // no changes, quest ignore this data
+                }
             }
         }
 
