@@ -4654,14 +4654,14 @@ float Aura::CalculateDotDamage() const
                     uint8 cp = ((Player*)caster)->GetComboPoints();
 
                     if (cp > 4) cp = 4;
-                    damage += caster->GetTotalAttackPowerValue(BASE_ATTACK) * cp / 100;
+                    damage += (caster->GetTotalAttackPowerValue(BASE_ATTACK) * cp / 100) * 1.33f;
                 }
             }
             // Rake
             else if (spellProto->Id == 1822 || spellProto->Id == 1823 || spellProto->Id == 1824 || spellProto->Id == 9904)
             {
-                // 0.03 * AP per trigger
-                damage = damage + (caster->GetTotalAttackPowerValue(BASE_ATTACK) * 0.03f);
+                // 0.035 * AP per trigger
+                damage = damage + (caster->GetTotalAttackPowerValue(BASE_ATTACK) * 0.035f);
             }
 #endif
             break;

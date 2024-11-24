@@ -510,9 +510,9 @@ void Spell::EffectSchoolDMG(SpellEffectIndex effect_idx)
                     // - Ferocious Bite: Book of Ferocious Bite (Rank 5) now drops off The
                     //   Beast in Black Rock Spire. In addition, Ferocious Bite now increases
                     //   in potency with greater attack power.
-                    // ( AP * 3% * combo + energy * 2,7 + damage )
+                    // ( AP * 4% * combo + energy * 2,7 + damage )
                     if (uint32 combo = ((Player*)pPlayer)->GetComboPoints())
-                        damage += pPlayer->GetTotalAttackPowerValue(BASE_ATTACK) * combo * 0.03f;
+                        damage += pPlayer->GetTotalAttackPowerValue(BASE_ATTACK) * combo * 0.04f;
 #endif
                     damage += pPlayer->GetPower(POWER_ENERGY) * m_spellInfo->DmgMultiplier[effect_idx];
                     pPlayer->SetPower(POWER_ENERGY, 0);
@@ -520,14 +520,14 @@ void Spell::EffectSchoolDMG(SpellEffectIndex effect_idx)
                 // Swipe
                 else if (m_spellInfo->Id == 779 || m_spellInfo->Id == 780 || m_spellInfo->Id == 769 || m_spellInfo->Id == 9754 || m_spellInfo->Id == 9908)
                 {
-                    // DRUID - Swipe : damage bonus 3.75% armor
+                    // DRUID - Swipe : damage bonus 2.5% armor
                     if (unitTarget)
-                        damage += (m_casterUnit->GetArmor() + (unitTarget->GetArmor() >= m_casterUnit->GetArmor() ? 0 : (m_casterUnit->GetArmor() - unitTarget->GetArmor()))) * 0.0375f;
+                        damage += (m_casterUnit->GetArmor() + (unitTarget->GetArmor() >= m_casterUnit->GetArmor() ? 0 : (m_casterUnit->GetArmor() - unitTarget->GetArmor()))) * 0.025f;
                 }
                 // Rake
                 else if (m_spellInfo->Id == 1822 || m_spellInfo->Id == 1823 || m_spellInfo->Id == 1824 || m_spellInfo->Id == 9904)
-                    // DRUID - Rake : damage bonus 5% attack power
-                    damage = damage + (m_casterUnit->GetTotalAttackPowerValue(BASE_ATTACK) * 0.05f);
+                    // DRUID - Rake : damage bonus 3.5% attack power
+                    damage = damage + (m_casterUnit->GetTotalAttackPowerValue(BASE_ATTACK) * 0.035f);
                 break;
             }
             case SPELLFAMILY_ROGUE:
