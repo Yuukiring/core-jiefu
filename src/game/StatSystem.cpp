@@ -276,9 +276,9 @@ float Unit::GetAttackPowerFromStrengthAndAgility(bool ranged, float strength, fl
                 {
                     case FORM_CAT:
                        // World of Warcraft Client Patch 1.7.0 (2005-09-13)
-                       // - Cat Form - Each point of strength now adds 3 attack power, agility now adds 2 attack power.
+                       // - Cat Form - Each point of agility now adds 2 attack power.
 #if SUPPORTED_CLIENT_BUILD > CLIENT_BUILD_1_6_1
-                        val2 = GetLevel() * mLevelMult + strength * 3.0f + agility * 2.0f - 20.0f;
+                        val2 = GetLevel() * mLevelMult + strength * 2.0f + agility * 2.0f - 20.0f;
                         break;
 #endif
                     case FORM_BEAR:
