@@ -19,6 +19,792 @@
 #include "ScriptedAI.h"
 #include <ctime>
 
+// HARDCORE REWARD NPC
+
+bool GossipHello_Hardcore_Reward_NPC(Player *player, Creature *_Creature)   
+{
+    player->ADD_GOSSIP_ITEM(7, "各职业第一个到达60级的硬核模式玩家，可随机获取一件职业橙装。",               GOSSIP_SENDER_MAIN, 1);
+    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, _Creature->GetGUID());
+    return true;
+}
+void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, uint32 action)
+{
+    switch (action)
+    {
+        case 1:
+            if (!player->GetQuestStatus(10000) == QUEST_STATUS_COMPLETE)
+            {
+                player->GetSession()->SendNotification("非硬核模式，无法领取奖励。");
+                break;
+            }
+            if (player->GetLevel() < 60)
+            {
+                player->GetSession()->SendNotification("未到达60级，无法领取奖励。");
+                break;
+            }
+            std::unique_ptr<QueryResult> result = CharacterDatabase.PQuery("select name from `hardcore_reward` where `class` = %u", player->GetClass());
+            if(result)
+            {
+                std::string playerName = result->Fetch()[0].GetString();
+                player->GetSession()->SendNotification("玩家：%s已第一个到达60级，无法领取奖励。", playerName);
+                break;
+            }
+            switch (player->GetClass())
+            {
+                // WARRIOR
+                case 1:
+                    bool has_26010 = player->HasItemCount(26010, 1, true);
+                    bool has_26027 = player->HasItemCount(26027, 1, true);
+                    bool has_26028 = player->HasItemCount(26028, 1, true);
+                    // 有0件
+                    if (!has_26010 && !has_26027 && !has_26028)
+                    {
+                        switch (urand(1,3))
+                        {
+                            case 1:
+                                player->AddItem(26010);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26027);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 3:
+                                player->AddItem(26028);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    // 有1件
+                    else if (has_26010 && !has_26027 && !has_26028)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26027);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26028);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26010 && has_26027 && !has_26028)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26010);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26028);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26010 && !has_26027 && has_26028)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26010);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26027);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    // 有2件
+                    else if (!has_26010 && has_26027 && has_26028)
+                    {
+                        player->AddItem(26010);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    else if (has_26010 && !has_26027 && has_26028)
+                    {
+                        player->AddItem(26027);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    else if (has_26010 && has_26027 && !has_26028)
+                    {
+                        player->AddItem(26028);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    // 有3件
+                    else if (has_26010 && has_26027 && has_26028)
+                    {
+                        player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
+                        player->ModifyMoney(1000 * GOLD);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    break;
+                // PALADIN
+                case 2:
+                    bool has_26022 = player->HasItemCount(26022, 1, true);
+                    bool has_26027 = player->HasItemCount(26027, 1, true);
+                    bool has_26028 = player->HasItemCount(26028, 1, true);
+                    bool has_26036 = player->HasItemCount(26036, 1, true);
+                    // 有0件
+                    if (!has_26022 && !has_26027 && !has_26028 && !has_26036)
+                    {
+                        switch (urand(1,4))
+                        {
+                            case 1:
+                                player->AddItem(26022);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26027);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 3:
+                                player->AddItem(26028);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 4:
+                                player->AddItem(26036);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    // 有1件
+                    else if (has_26022 && !has_26027 && !has_26028 && !has_26036)
+                    {
+                        switch (urand(1,3))
+                        {
+                            case 1:
+                                player->AddItem(26027);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26028);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 3:
+                                player->AddItem(26036);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26022 && has_26027 && !has_26028 && !has_26036)
+                    {
+                        switch (urand(1,3))
+                        {
+                            case 1:
+                                player->AddItem(26022);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26028);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 3:
+                                player->AddItem(26036);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26022 && !has_26027 && has_26028 && !has_26036)
+                    {
+                        switch (urand(1,3))
+                        {
+                            case 1:
+                                player->AddItem(26022);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26027);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 3:
+                                player->AddItem(26036);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26022 && !has_26027 && !has_26028 && has_26036)
+                    {
+                        switch (urand(1,3))
+                        {
+                            case 1:
+                                player->AddItem(26022);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26027);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 3:
+                                player->AddItem(26028);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    // 有2件
+                    else if (has_26022 && has_26027 && !has_26028 && !has_26036)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26028);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26036);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (has_26022 && !has_26027 && has_26028 && !has_26036)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26027);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26036);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (has_26022 && !has_26027 && !has_26028 && has_26036)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26027);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26028);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26022 && has_26027 && has_26028 && !has_26036)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26022);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26036);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26022 && has_26027 && !has_26028 && has_26036)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26022);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26028);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26022 && !has_26027 && has_26028 && has_26036)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26022);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26027);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    // 有3件
+                    else if (!has_26022 && has_26027 && has_26028 && has_26036)
+                    {
+                        player->AddItem(26022);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    else if (has_26022 && !has_26027 && has_26028 && has_26036)
+                    {
+                        player->AddItem(26027);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    else if (has_26022 && has_26027 && !has_26028 && has_26036)
+                    {
+                        player->AddItem(26028);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    else if (has_26022 && has_26027 && has_26028 && !has_26036)
+                    {
+                        player->AddItem(26036);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    // 有4件
+                    else if (has_26022 && has_26027 && has_26028 && has_26036)
+                    {
+                        player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
+                        player->ModifyMoney(1000 * GOLD);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    break;
+                // HUNTER
+                case 3:
+                    bool has_26024 = player->HasItemCount(26024, 1, true);
+                    bool has_26032 = player->HasItemCount(26032, 1, true);
+                    // 有0件
+                    if (!has_26024 && !has_26032)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26024);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26032);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    // 有1件
+                    else if (!has_26024 && has_26032)
+                    {
+                        player->AddItem(26024);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    else if (has_26024 && !has_26032)
+                    {
+                        player->AddItem(26032);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    // 有2件
+                    else if (has_26024 && has_26032)
+                    {
+                        player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
+                        player->ModifyMoney(1000 * GOLD);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    break;
+                // ROGUE
+                case 4:
+                    bool has_26020 = player->HasItemCount(26020, 1, true);
+                    bool has_26021 = player->HasItemCount(26021, 1, true);
+                    // 有0件
+                    if (!has_26020 && !has_26021)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26020);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26021);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    // 有1件
+                    else if (!has_26020 && has_26021)
+                    {
+                        player->AddItem(26020);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    else if (has_26020 && !has_26021)
+                    {
+                        player->AddItem(26021);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    // 有2件
+                    else if (has_26020 && has_26021)
+                    {
+                        player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
+                        player->ModifyMoney(1000 * GOLD);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    break;
+                // PRIEST
+                case 5:
+                    bool has_26029 = player->HasItemCount(26029, 1, true);
+                    // 有0件
+                    if (!has_26029)
+                    {
+                        player->AddItem(26029);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    // 有1件
+                    else if (has_26029)
+                    {
+                        player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
+                        player->ModifyMoney(1000 * GOLD);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    break;
+                // SHAMAN
+                case 7:
+                    bool has_26023 = player->HasItemCount(26023, 1, true);
+                    bool has_26029 = player->HasItemCount(26029, 1, true);
+                    bool has_26038 = player->HasItemCount(26038, 1, true);
+                    // 有0件
+                    if (!has_26023 && !has_26029 && !has_26038)
+                    {
+                        switch (urand(1,3))
+                        {
+                            case 1:
+                                player->AddItem(26023);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26029);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 3:
+                                player->AddItem(26038);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    // 有1件
+                    else if (has_26023 && !has_26029 && !has_26038)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26029);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26038);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26023 && has_26029 && !has_26038)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26023);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26038);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26023 && !has_26029 && has_26038)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26023);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26029);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    // 有2件
+                    else if (!has_26023 && has_26029 && has_26038)
+                    {
+                        player->AddItem(26023);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    else if (has_26023 && !has_26029 && has_26038)
+                    {
+                        player->AddItem(26029);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    else if (has_26023 && has_26029 && !has_26038)
+                    {
+                        player->AddItem(26038);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    // 有3件
+                    else if (has_26023 && has_26029 && has_26038)
+                    {
+                        player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
+                        player->ModifyMoney(1000 * GOLD);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    break;
+                // MAGE
+                case 8:
+                    bool has_26029 = player->HasItemCount(26029, 1, true);
+                    // 有0件
+                    if (!has_26029)
+                    {
+                        player->AddItem(26029);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    // 有1件
+                    else if (has_26029)
+                    {
+                        player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
+                        player->ModifyMoney(1000 * GOLD);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    break;
+                // WARLOCK
+                case 9:
+                    bool has_26029 = player->HasItemCount(26029, 1, true);
+                    // 有0件
+                    if (!has_26029)
+                    {
+                        player->AddItem(26029);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    // 有1件
+                    else if (has_26029)
+                    {
+                        player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
+                        player->ModifyMoney(1000 * GOLD);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    break;
+                // DRUID
+                case 11:
+                    bool has_26029 = player->HasItemCount(26029, 1, true);
+                    bool has_26034 = player->HasItemCount(26034, 1, true);
+                    bool has_26035 = player->HasItemCount(26035, 1, true);
+                    bool has_26037 = player->HasItemCount(26037, 1, true);
+                    // 有0件
+                    if (!has_26029 && !has_26034 && !has_26035 && !has_26037)
+                    {
+                        switch (urand(1,4))
+                        {
+                            case 1:
+                                player->AddItem(26029);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26034);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 3:
+                                player->AddItem(26035);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 4:
+                                player->AddItem(26037);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    // 有1件
+                    else if (has_26029 && !has_26034 && !has_26035 && !has_26037)
+                    {
+                        switch (urand(1,3))
+                        {
+                            case 1:
+                                player->AddItem(26034);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26035);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 3:
+                                player->AddItem(26037);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26029 && has_26034 && !has_26035 && !has_26037)
+                    {
+                        switch (urand(1,3))
+                        {
+                            case 1:
+                                player->AddItem(26029);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26035);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 3:
+                                player->AddItem(26037);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26029 && !has_26034 && has_26035 && !has_26037)
+                    {
+                        switch (urand(1,3))
+                        {
+                            case 1:
+                                player->AddItem(26029);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26034);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 3:
+                                player->AddItem(26037);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26029 && !has_26034 && !has_26035 && has_26037)
+                    {
+                        switch (urand(1,3))
+                        {
+                            case 1:
+                                player->AddItem(26029);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26034);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 3:
+                                player->AddItem(26035);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    // 有2件
+                    else if (has_26029 && has_26034 && !has_26035 && !has_26037)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26035);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26037);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (has_26029 && !has_26034 && has_26035 && !has_26037)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26034);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26037);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (has_26029 && !has_26034 && !has_26035 && has_26037)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26034);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26035);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26029 && has_26034 && has_26035 && !has_26037)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26029);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26037);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26029 && has_26034 && !has_26035 && has_26037)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26029);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26035);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    else if (!has_26029 && !has_26034 && has_26035 && has_26037)
+                    {
+                        switch (urand(1,2))
+                        {
+                            case 1:
+                                player->AddItem(26029);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                            case 2:
+                                player->AddItem(26034);
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                                break;
+                        }
+                    }
+                    // 有3件
+                    else if (!has_26029 && has_26034 && has_26035 && has_26037)
+                    {
+                        player->AddItem(26029);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    else if (has_26029 && !has_26034 && has_26035 && has_26037)
+                    {
+                        player->AddItem(26034);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    else if (has_26029 && has_26034 && !has_26035 && has_26037)
+                    {
+                        player->AddItem(26035);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    else if (has_26029 && has_26034 && has_26035 && !has_26037)
+                    {
+                        player->AddItem(26037);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    // 有4件
+                    else if (has_26029 && has_26034 && has_26035 && has_26037)
+                    {
+                        player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
+                        player->ModifyMoney(1000 * GOLD);
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
+                    }
+                    break;
+            }
+            break;
+    }
+}
+bool GossipSelect_Hardcore_Reward_NPC(Player *player, Creature *_Creature, uint32 sender, uint32 action)
+{
+    // Main menu
+    if (sender == GOSSIP_SENDER_MAIN)
+        SendDefaultMenu_Hardcore_Reward_NPC(player, _Creature, action);
+
+    return true;
+}
+
 // TELEPORT NPC
 
 bool GossipHello_TeleportNPC(Player *player, Creature *_Creature)   
@@ -2225,6 +3011,12 @@ CreatureAI* GetAI_custom_summon_debug(Creature *creature)
 void AddSC_custom_creatures()
 {
     Script* newscript;
+
+    newscript = new Script;
+    newscript->Name = "custom_hardcore_reward_npc";
+    newscript->pGossipHello = &GossipHello_Hardcore_Reward_NPC;
+    newscript->pGossipSelect = &GossipSelect_Hardcore_Reward_NPC;
+    newscript->RegisterSelf(false);
 
     newscript = new Script;
     newscript->Name = "custom_teleport_npc";
