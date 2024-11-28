@@ -51,11 +51,23 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
             }
             switch (player->GetClass())
             {
+                bool has_26010 = player->HasItemCount(26010, 1, true);
+                bool has_26020 = player->HasItemCount(26020, 1, true);
+                bool has_26021 = player->HasItemCount(26021, 1, true);
+                bool has_26022 = player->HasItemCount(26022, 1, true);
+                bool has_26023 = player->HasItemCount(26023, 1, true);
+                bool has_26024 = player->HasItemCount(26024, 1, true);
+                bool has_26027 = player->HasItemCount(26027, 1, true);
+                bool has_26028 = player->HasItemCount(26028, 1, true);
+                bool has_26029 = player->HasItemCount(26029, 1, true);
+                bool has_26032 = player->HasItemCount(26032, 1, true);
+                bool has_26034 = player->HasItemCount(26034, 1, true);
+                bool has_26035 = player->HasItemCount(26035, 1, true);
+                bool has_26036 = player->HasItemCount(26036, 1, true);
+                bool has_26037 = player->HasItemCount(26037, 1, true);
+                bool has_26038 = player->HasItemCount(26038, 1, true);
                 // WARRIOR
                 case 1:
-                    bool has_26010 = player->HasItemCount(26010, 1, true);
-                    bool has_26027 = player->HasItemCount(26027, 1, true);
-                    bool has_26028 = player->HasItemCount(26028, 1, true);
                     // 有0件
                     if (!has_26010 && !has_26027 && !has_26028)
                     {
@@ -144,10 +156,6 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     break;
                 // PALADIN
                 case 2:
-                    bool has_26022 = player->HasItemCount(26022, 1, true);
-                    bool has_26027 = player->HasItemCount(26027, 1, true);
-                    bool has_26028 = player->HasItemCount(26028, 1, true);
-                    bool has_26036 = player->HasItemCount(26036, 1, true);
                     // 有0件
                     if (!has_26022 && !has_26027 && !has_26028 && !has_26036)
                     {
@@ -360,8 +368,6 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     break;
                 // HUNTER
                 case 3:
-                    bool has_26024 = player->HasItemCount(26024, 1, true);
-                    bool has_26032 = player->HasItemCount(26032, 1, true);
                     // 有0件
                     if (!has_26024 && !has_26032)
                     {
@@ -398,8 +404,6 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     break;
                 // ROGUE
                 case 4:
-                    bool has_26020 = player->HasItemCount(26020, 1, true);
-                    bool has_26021 = player->HasItemCount(26021, 1, true);
                     // 有0件
                     if (!has_26020 && !has_26021)
                     {
@@ -436,7 +440,6 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     break;
                 // PRIEST
                 case 5:
-                    bool has_26029 = player->HasItemCount(26029, 1, true);
                     // 有0件
                     if (!has_26029)
                     {
@@ -453,9 +456,6 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     break;
                 // SHAMAN
                 case 7:
-                    bool has_26023 = player->HasItemCount(26023, 1, true);
-                    bool has_26029 = player->HasItemCount(26029, 1, true);
-                    bool has_26038 = player->HasItemCount(26038, 1, true);
                     // 有0件
                     if (!has_26023 && !has_26029 && !has_26038)
                     {
@@ -544,7 +544,6 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     break;
                 // MAGE
                 case 8:
-                    bool has_26029 = player->HasItemCount(26029, 1, true);
                     // 有0件
                     if (!has_26029)
                     {
@@ -561,7 +560,6 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     break;
                 // WARLOCK
                 case 9:
-                    bool has_26029 = player->HasItemCount(26029, 1, true);
                     // 有0件
                     if (!has_26029)
                     {
@@ -578,10 +576,6 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     break;
                 // DRUID
                 case 11:
-                    bool has_26029 = player->HasItemCount(26029, 1, true);
-                    bool has_26034 = player->HasItemCount(26034, 1, true);
-                    bool has_26035 = player->HasItemCount(26035, 1, true);
-                    bool has_26037 = player->HasItemCount(26037, 1, true);
                     // 有0件
                     if (!has_26029 && !has_26034 && !has_26035 && !has_26037)
                     {
