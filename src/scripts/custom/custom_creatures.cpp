@@ -75,15 +75,15 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26010);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26027);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 3:
                                 player->AddItem(26028);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -94,11 +94,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26027);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26028);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -108,11 +108,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26010);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26028);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -122,11 +122,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26010);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26027);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -134,24 +134,24 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     else if (!has_26010 && has_26027 && has_26028)
                     {
                         player->AddItem(26010);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     else if (has_26010 && !has_26027 && has_26028)
                     {
                         player->AddItem(26027);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     else if (has_26010 && has_26027 && !has_26028)
                     {
                         player->AddItem(26028);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     // 有3件
                     else if (has_26010 && has_26027 && has_26028)
                     {
                         player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
                         player->ModifyMoney(1000 * GOLD);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     break;
                 // PALADIN
@@ -163,19 +163,19 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26022);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26027);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 3:
                                 player->AddItem(26028);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 4:
                                 player->AddItem(26036);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -186,15 +186,15 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26027);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26028);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 3:
                                 player->AddItem(26036);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -204,15 +204,15 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26022);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26028);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 3:
                                 player->AddItem(26036);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -222,15 +222,15 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26022);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26027);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 3:
                                 player->AddItem(26036);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -240,15 +240,15 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26022);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26027);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 3:
                                 player->AddItem(26028);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -259,11 +259,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26028);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26036);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -273,11 +273,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26027);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26036);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -287,11 +287,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26027);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26028);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -301,11 +301,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26022);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26036);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -315,11 +315,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26022);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26028);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -329,11 +329,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26022);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26027);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -341,29 +341,29 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     else if (!has_26022 && has_26027 && has_26028 && has_26036)
                     {
                         player->AddItem(26022);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     else if (has_26022 && !has_26027 && has_26028 && has_26036)
                     {
                         player->AddItem(26027);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     else if (has_26022 && has_26027 && !has_26028 && has_26036)
                     {
                         player->AddItem(26028);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     else if (has_26022 && has_26027 && has_26028 && !has_26036)
                     {
                         player->AddItem(26036);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     // 有4件
                     else if (has_26022 && has_26027 && has_26028 && has_26036)
                     {
                         player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
                         player->ModifyMoney(1000 * GOLD);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     break;
                 // HUNTER
@@ -375,11 +375,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26024);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26032);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -387,19 +387,19 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     else if (!has_26024 && has_26032)
                     {
                         player->AddItem(26024);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     else if (has_26024 && !has_26032)
                     {
                         player->AddItem(26032);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     // 有2件
                     else if (has_26024 && has_26032)
                     {
                         player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
                         player->ModifyMoney(1000 * GOLD);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     break;
                 // ROGUE
@@ -411,11 +411,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26020);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26021);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -423,19 +423,19 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     else if (!has_26020 && has_26021)
                     {
                         player->AddItem(26020);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     else if (has_26020 && !has_26021)
                     {
                         player->AddItem(26021);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     // 有2件
                     else if (has_26020 && has_26021)
                     {
                         player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
                         player->ModifyMoney(1000 * GOLD);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     break;
                 // PRIEST
@@ -444,14 +444,14 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     if (!has_26029)
                     {
                         player->AddItem(26029);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     // 有1件
                     else if (has_26029)
                     {
                         player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
                         player->ModifyMoney(1000 * GOLD);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     break;
                 // SHAMAN
@@ -463,15 +463,15 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26023);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26029);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 3:
                                 player->AddItem(26038);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -482,11 +482,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26029);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26038);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -496,11 +496,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26023);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26038);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -510,11 +510,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26023);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26029);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -522,24 +522,24 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     else if (!has_26023 && has_26029 && has_26038)
                     {
                         player->AddItem(26023);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     else if (has_26023 && !has_26029 && has_26038)
                     {
                         player->AddItem(26029);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     else if (has_26023 && has_26029 && !has_26038)
                     {
                         player->AddItem(26038);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     // 有3件
                     else if (has_26023 && has_26029 && has_26038)
                     {
                         player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
                         player->ModifyMoney(1000 * GOLD);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     break;
                 // MAGE
@@ -548,14 +548,14 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     if (!has_26029)
                     {
                         player->AddItem(26029);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     // 有1件
                     else if (has_26029)
                     {
                         player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
                         player->ModifyMoney(1000 * GOLD);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     break;
                 // WARLOCK
@@ -564,14 +564,14 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     if (!has_26029)
                     {
                         player->AddItem(26029);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     // 有1件
                     else if (has_26029)
                     {
                         player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
                         player->ModifyMoney(1000 * GOLD);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     break;
                 // DRUID
@@ -583,19 +583,19 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26029);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26034);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 3:
                                 player->AddItem(26035);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 4:
                                 player->AddItem(26037);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -606,15 +606,15 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26034);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26035);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 3:
                                 player->AddItem(26037);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -624,15 +624,15 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26029);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26035);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 3:
                                 player->AddItem(26037);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -642,15 +642,15 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26029);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26034);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 3:
                                 player->AddItem(26037);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -660,15 +660,15 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26029);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26034);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 3:
                                 player->AddItem(26035);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -679,11 +679,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26035);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26037);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -693,11 +693,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26034);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26037);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -707,11 +707,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26034);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26035);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -721,11 +721,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26029);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26037);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -735,11 +735,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26029);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26035);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -749,11 +749,11 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                         {
                             case 1:
                                 player->AddItem(26029);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                             case 2:
                                 player->AddItem(26034);
-                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                                CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                                 break;
                         }
                     }
@@ -761,29 +761,29 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                     else if (!has_26029 && has_26034 && has_26035 && has_26037)
                     {
                         player->AddItem(26029);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     else if (has_26029 && !has_26034 && has_26035 && has_26037)
                     {
                         player->AddItem(26034);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     else if (has_26029 && has_26034 && !has_26035 && has_26037)
                     {
                         player->AddItem(26035);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     else if (has_26029 && has_26034 && has_26035 && !has_26037)
                     {
                         player->AddItem(26037);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     // 有4件
                     else if (has_26029 && has_26034 && has_26035 && has_26037)
                     {
                         player->GetSession()->SendNotification("已集齐职业橙装，奖励1000金币。");
                         player->ModifyMoney(1000 * GOLD);
-                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, %s, %u)", player->GetGUIDLow(), std::string(player->GetName()), player->GetClass());
+                        CharacterDatabase.PExecute("REPLACE INTO `hardcore_reward` (`guid`, `name`, `class`) VALUES (%u, '%s', %u)", player->GetGUIDLow(), player->GetName(), player->GetClass());
                     }
                     break;
             }
