@@ -49,23 +49,23 @@ void SendDefaultMenu_Hardcore_Reward_NPC(Player *player, Creature *_Creature, ui
                 player->GetSession()->SendNotification("玩家：%s已第一个到达60级，无法领取奖励。", playerName);
                 break;
             }
+            bool has_26010 = player->HasItemCount(26010, 1, true);
+            bool has_26020 = player->HasItemCount(26020, 1, true);
+            bool has_26021 = player->HasItemCount(26021, 1, true);
+            bool has_26022 = player->HasItemCount(26022, 1, true);
+            bool has_26023 = player->HasItemCount(26023, 1, true);
+            bool has_26024 = player->HasItemCount(26024, 1, true);
+            bool has_26027 = player->HasItemCount(26027, 1, true);
+            bool has_26028 = player->HasItemCount(26028, 1, true);
+            bool has_26029 = player->HasItemCount(26029, 1, true);
+            bool has_26032 = player->HasItemCount(26032, 1, true);
+            bool has_26034 = player->HasItemCount(26034, 1, true);
+            bool has_26035 = player->HasItemCount(26035, 1, true);
+            bool has_26036 = player->HasItemCount(26036, 1, true);
+            bool has_26037 = player->HasItemCount(26037, 1, true);
+            bool has_26038 = player->HasItemCount(26038, 1, true);
             switch (player->GetClass())
             {
-                bool has_26010 = player->HasItemCount(26010, 1, true);
-                bool has_26020 = player->HasItemCount(26020, 1, true);
-                bool has_26021 = player->HasItemCount(26021, 1, true);
-                bool has_26022 = player->HasItemCount(26022, 1, true);
-                bool has_26023 = player->HasItemCount(26023, 1, true);
-                bool has_26024 = player->HasItemCount(26024, 1, true);
-                bool has_26027 = player->HasItemCount(26027, 1, true);
-                bool has_26028 = player->HasItemCount(26028, 1, true);
-                bool has_26029 = player->HasItemCount(26029, 1, true);
-                bool has_26032 = player->HasItemCount(26032, 1, true);
-                bool has_26034 = player->HasItemCount(26034, 1, true);
-                bool has_26035 = player->HasItemCount(26035, 1, true);
-                bool has_26036 = player->HasItemCount(26036, 1, true);
-                bool has_26037 = player->HasItemCount(26037, 1, true);
-                bool has_26038 = player->HasItemCount(26038, 1, true);
                 // WARRIOR
                 case 1:
                     // 有0件
