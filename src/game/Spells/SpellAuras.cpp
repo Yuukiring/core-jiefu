@@ -1719,11 +1719,11 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                     case 34187:
                     {
                         bool castspells = true;
-                        uint32 spells[7] = {24425,22888,34073,34072,34075,34074,34076};
-                        uint32 times[7] = {};
+                        uint32 spells[8] = {24425,22888,34073,34072,34075,34074,34076,34276};
+                        uint32 times[8] = {};
                         if (Player* player = ToPlayer(GetCaster()))
                         {
-                            for (int i = 0; i < 7; i++)
+                            for (int i = 0; i < 8; i++)
                             {
                                 if (player->HasAura(spells[i]))
                                 {
@@ -1733,13 +1733,13 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                             }
                             Aura* aura = NULL;
                             SpellAuraHolder* auraH = NULL;
-                            std::unique_ptr<QueryResult> result = CharacterDatabase.PQuery("select spell_24425,spell_22888,spell_34073,spell_34072,spell_34075,spell_34074,spell_34076 from `character_chromie_belongings` where `guid` = %u", player->GetGUIDLow());
+                            std::unique_ptr<QueryResult> result = CharacterDatabase.PQuery("select spell_24425,spell_22888,spell_34073,spell_34072,spell_34075,spell_34074,spell_34076,spell_34276 from `character_chromie_belongings` where `guid` = %u", player->GetGUIDLow());
                             if (castspells)
                             {
                                 if (result)
                                 {
                                     Field* fields = result->Fetch();
-                                    for (int i = 0; i < 7; i++)
+                                    for (int i = 0; i < 8; i++)
                                     {
                                         if (fields[i].GetUInt32() != 0)
                                         {
@@ -1759,12 +1759,12 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                                 if (result)
                                 {
                                     Field* fields = result->Fetch();
-                                    for (int i = 0; i < 7; i++)
+                                    for (int i = 0; i < 8; i++)
                                     {
                                         times[i] = fields[i].GetUInt32();
                                     }
                                 }
-                                for (int i = 0; i < 7; i++)
+                                for (int i = 0; i < 8; i++)
                                 {
                                     if (aura = player->GetAura(spells[i], EFFECT_INDEX_0))
                                     {
@@ -1775,7 +1775,7 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                                         aura->GetHolder()->RefreshHolder();
                                     }
                                 }
-                                CharacterDatabase.PExecute("replace into `character_chromie_belongings` (`guid`, `spell_24425`, `spell_22888`, `spell_34073`, `spell_34072`, `spell_34075`, `spell_34074`, `spell_34076`) VALUES (%u, %u, %u, %u, %u, %u, %u, %u)", player->GetGUIDLow(), times[0], times[1], times[2], times[3], times[4], times[5], times[6]);
+                                CharacterDatabase.PExecute("replace into `character_chromie_belongings` (`guid`, `spell_24425`, `spell_22888`, `spell_34073`, `spell_34072`, `spell_34075`, `spell_34074`, `spell_34076`, `spell_34276`) VALUES (%u, %u, %u, %u, %u, %u, %u, %u, %u)", player->GetGUIDLow(), times[0], times[1], times[2], times[3], times[4], times[5], times[6], times[7]);
                             }
                         }
                     }
