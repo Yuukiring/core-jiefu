@@ -7937,7 +7937,7 @@ void SpellAuraHolder::CalculateForBuffLimit()
 {
     m_visibleSlotLimitAffected = true;
 
-    if (IsPermanent())
+    if (IsPermanent() || m_spellProto->Id == 34000 || m_spellProto->Id == 34001)
         m_visibleSlotLimitScore = 3;
     else if (GetCasterGuid() != GetTarget()->GetObjectGuid())
         m_visibleSlotLimitScore = 2;
