@@ -242,8 +242,22 @@ void Item::UpdateDuration(Player* owner, uint32 diff)
 
     if (GetUInt32Value(ITEM_FIELD_DURATION) <= diff)
     {
+        /*
         owner->DestroyItem(GetBagSlot(), GetSlot(), true);
         return;
+        */
+        // Modification - trading in loot for two hours.
+        if (GetLootingTime())
+        {
+            SetUInt32Value(ITEM_FIELD_DURATION, 0);
+            SetBinding(true);
+            SetLootingTime(0);
+            SetRaidGroup("");
+        }
+        else
+        {
+            owner->DestroyItem(GetBagSlot(), GetSlot(), true);
+        }
     }
 
     SetUInt32Value(ITEM_FIELD_DURATION, GetUInt32Value(ITEM_FIELD_DURATION) - diff);
@@ -251,6 +265,7 @@ void Item::UpdateDuration(Player* owner, uint32 diff)
 }
 
 // Modification - trading in loot for two hours.
+/*
 void Item::UpdateDurationRaidLooting(uint32 diff)
 {
     if (!GetUInt32Value(ITEM_FIELD_DURATION))
@@ -258,7 +273,7 @@ void Item::UpdateDurationRaidLooting(uint32 diff)
 
     SetUInt32Value(ITEM_FIELD_DURATION, GetUInt32Value(ITEM_FIELD_DURATION) - diff);
 }
-
+*/
 
 void Item::SaveToDB()
 {

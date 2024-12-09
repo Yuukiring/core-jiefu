@@ -1561,11 +1561,14 @@ void Player::Update(uint32 update_diff, uint32 p_time)
 
     // Update items that have just a limited lifetime
     if (now > m_lastTick)
+        UpdateItemDuration(uint32(now - m_lastTick));
+    /*
     {
         UpdateItemDuration(uint32(now - m_lastTick));
         // Modification - trading in loot for two hours.
         UpdateItemsInBags(uint32(now - m_lastTick));
     }
+    */
 
     if (m_cameraUpdateTimer)
     {
@@ -12218,6 +12221,7 @@ void Player::UpdateItemDuration(uint32 time, bool realtimeonly)
 }
 
 // Modification - trading in loot for two hours.
+/*
 void Player::UpdateItemsInBags(uint32 diff)
 {
     for (int i = INVENTORY_SLOT_BAG_START; i < INVENTORY_SLOT_ITEM_END; ++i)
@@ -12237,6 +12241,7 @@ void Player::UpdateItemsInBags(uint32 diff)
         }
     }
 }
+*/
 
 void Player::UpdateEnchantTime(uint32 time)
 {
@@ -14408,9 +14413,7 @@ bool Player::TakeOrReplaceQuestStartItems(uint32 quest_id, bool msg, bool giveQu
         {
             if (uint32 questStartingItemID = sObjectMgr.GetQuestStartingItemID(quest_id))
                 AddItem(questStartingItemID, count);
-
         }
-
     }
 
     return true;
