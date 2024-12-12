@@ -849,7 +849,6 @@ void Spell::EffectDummy(SpellEffectIndex effIdx)
                             }
                             else
                             {
-                                pCaster->AddItem(6265);
                                 auto cdCheck = [](SpellEntry const & spellEntry) -> bool { return ((spellEntry.Id == 34295) && spellEntry.GetRecoveryTime() > 0); };
                                 pCaster->RemoveSomeCooldown(cdCheck);
                                 pCaster->GetSession()->SendNotification("Teleport Failed : Demonic Circle Too Far");
@@ -857,7 +856,6 @@ void Spell::EffectDummy(SpellEffectIndex effIdx)
                         }
                         else
                         {
-                            pCaster->AddItem(6265);
                             auto cdCheck = [](SpellEntry const & spellEntry) -> bool { return ((spellEntry.Id == 34295) && spellEntry.GetRecoveryTime() > 0); };
                             pCaster->RemoveSomeCooldown(cdCheck);
                             pCaster->GetSession()->SendNotification("Teleport Failed : No Available Demonic Circle");
