@@ -586,6 +586,13 @@ void Spell::EffectSchoolDMG(SpellEffectIndex effect_idx)
     }
 }
 
+uint32 getTimestamp()
+{
+    time_t rawtime = time(NULL);
+    struct tm *timeinfo = localtime(&rawtime);
+    return mktime(timeinfo);
+}
+
 void Spell::EffectDummy(SpellEffectIndex effIdx)
 {
     if (!unitTarget && !gameObjTarget && !itemTarget && !corpseTarget)
@@ -809,6 +816,43 @@ void Spell::EffectDummy(SpellEffectIndex effIdx)
                     // petdamage
                     if (static_cast<Player*>(m_caster)->GetPet())
                         static_cast<Player*>(m_caster)->CastCustomSpell(static_cast<Player*>(m_caster), 34282, static_cast<Player*>(m_caster)->HasAura_34165_34166_total(), {}, {}, true);
+                    return;
+                }
+                case 34294:
+                {
+                    if (m_caster->GetTypeId() != TYPEID_PLAYER)
+                        return;
+                    // Warlock Demonic Circle : Summon
+                    if (Player* pCaster = static_cast<Player*>(m_caster))
+                        CharacterDatabase.PExecute("replace into `character_warlock_demonic_circle` (`guid`, `map_id`, `instance_id`, `position_x`, `position_y`, `position_z`, `orientation`, `timer`) VALUES (%u, %u, %u, %f, %f, %f, %f, %u)", pCaster->GetObjectGuid(), pCaster->GetMapId(), pCaster->GetInstanceId(), pCaster->GetPositionX(), pCaster->GetPositionY(), pCaster->GetPositionZ(), pCaster->GetOrientation(), getTimestamp());
+                    return;
+                }
+                case 34295:
+                {
+                    if (m_caster->GetTypeId() != TYPEID_PLAYER)
+                        return;
+                    // Warlock Demonic Circle : Teleport
+                    if (Player* pCaster = static_cast<Player*>(m_caster))
+                    {
+                        std::unique_ptr<QueryResult> result = CharacterDatabase.PQuery("SELECT position_x, position_y, position_z, orientation FROM `character_warlock_demonic_circle` WHERE `guid`='%u' and `map_id`='%u' and `timer`>='%u' and `timer`<='%u' and `instance_id`='%u'", pCaster->GetObjectGuid(), pCaster->GetMapId(), getTimestamp()-300, getTimestamp(), pCaster->GetInstanceId());
+                        if (result)
+                        {
+                            Field* fields = result->Fetch();
+                            float x = fields[0].GetFloat();
+                            float y = fields[1].GetFloat();
+                            float z = fields[2].GetFloat();
+                            float o = fields[3].GetFloat();
+                            if (pCaster->GetDistance(x,y,z) <= 50.0f)
+                            {
+                                pCaster->TeleportTo(pCaster->GetMapId(), x, y, z, o);
+                                pCaster->CastSpell(pCaster, 5579, true);
+                            }
+                            else
+                                pCaster->GetSession()->SendNotification("Teleport Failed : Demonic Circle Too Far");
+                        }
+                        else
+                            pCaster->GetSession()->SendNotification("Teleport Failed : No Available Demonic Circle");
+                    }
                     return;
                 }
                 case 8344: // Universal Remote
