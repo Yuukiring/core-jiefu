@@ -2102,6 +2102,17 @@ void Spell::EffectDummy(SpellEffectIndex effIdx)
                     static_cast<Player*>(m_caster)->RemoveSomeCooldown(cdCheck);
                     return;
                 }
+                case 781:
+                case 14272:
+                case 14273:
+                {
+                    if (m_caster->GetTypeId() != TYPEID_PLAYER)
+                        return;
+                    // Hunter Disengage
+                    if (Player* pCaster = static_cast<Player*>(m_caster))
+                        pCaster->KnockBackFrom(pCaster, 20.0f, 10.0f);
+                    return;
+                }
             }
             break;
         }
