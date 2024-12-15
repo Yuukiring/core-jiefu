@@ -638,6 +638,17 @@ void WorldSession::HandleInitiateTradeOpcode(WorldPacket& recvPacket)
         return;
     }
 
+    // Can Not Trade Partybot Load Character In Dungeon
+    if (pOther->IsBot() && pOther->GetMap()->IsDungeon())
+    {
+        std::unique_ptr<QueryResult> result(CharacterDatabase.PQuery("SELECT 1 FROM `characters` WHERE `guid` = '%u' and `name` = '%s'", otherGuid, pOther->GetName()));
+        if (result)
+        {
+            SendTradeStatus(TRADE_STATUS_BUSY);
+            return;
+        }
+    }
+
     if (pOther == GetPlayer() || pOther->m_trade)
     {
         SendTradeStatus(TRADE_STATUS_BUSY);
