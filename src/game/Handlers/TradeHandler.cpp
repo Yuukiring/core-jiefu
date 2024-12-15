@@ -645,7 +645,8 @@ void WorldSession::HandleInitiateTradeOpcode(WorldPacket& recvPacket)
         std::unique_ptr<QueryResult> result(CharacterDatabase.PQuery("SELECT 1 FROM `characters` WHERE `guid` = '%u' and `name` = '%s'", otherGuid, pOther->GetName()));
         if (result)
         {
-            SendTradeStatus(TRADE_STATUS_TRADE_REJECTED);
+            GetPlayer()->GetSession()->SendNotification("Just Send Email(out of dungeon) Or Master Looter(in dungeon).");
+            SendTradeStatus(TRADE_STATUS_BUSY);
             return;
         }
     }
