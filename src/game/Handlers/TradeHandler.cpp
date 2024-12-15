@@ -638,17 +638,6 @@ void WorldSession::HandleInitiateTradeOpcode(WorldPacket& recvPacket)
         return;
     }
 
-    // Can Not Trade Partybot Load Character In Dungeon
-    if (pOther->IsBot() && pOther->GetMap()->IsDungeon())
-    {
-        std::unique_ptr<QueryResult> result(CharacterDatabase.PQuery("SELECT 1 FROM `characters` WHERE `guid` = '%u' and `name` = '%s'", otherGuid, pOther->GetName()));
-        if (result)
-        {
-            SendTradeStatus(TRADE_STATUS_BUSY);
-            return;
-        }
-    }
-
     if (pOther == GetPlayer() || pOther->m_trade)
     {
         SendTradeStatus(TRADE_STATUS_BUSY);
@@ -806,6 +795,21 @@ void WorldSession::HandleSetTradeItemOpcode(WorldPacket& recvPacket)
     {
         SendTradeStatus(TRADE_STATUS_TRADE_CANCELED);
         return;
+    }
+
+    // Can Not Trade Partybot(.load character) Weapons&Armors
+    // Just Send Email(out of dungeon) Or Master Looter(in dungeon)
+    if (Player* pOther = my_trade->GetTrader())
+    {
+        if (pOther->IsBot() && (item->GetProto()->Class == ITEM_CLASS_WEAPON || item->GetProto()->Class == ITEM_CLASS_ARMOR))
+        {
+            std::unique_ptr<QueryResult> result(CharacterDatabase.PQuery("SELECT 1 FROM `characters` WHERE `guid` = '%u' and `name` = '%s'", pOther->GetGUID(), pOther->GetName()));
+            if (result)
+            {
+                SendTradeStatus(TRADE_STATUS_TRADE_CANCELED);
+                return;
+            }
+        }
     }
 
     his_trade->SetAccepted(false);
