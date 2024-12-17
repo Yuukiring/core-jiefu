@@ -607,6 +607,10 @@ void World::LoadConfigSettings(bool reload)
     setConfig(CONFIG_BOOL_ALLOW_TWO_SIDE_WHO_LIST,            "AllowTwoSide.WhoList", false);
     setConfig(CONFIG_BOOL_ALLOW_TWO_SIDE_ADD_FRIEND,          "AllowTwoSide.AddFriend", false);
 
+    //EtherealBlade & AstralImprisonment In Raid
+    setConfig(CONFIG_PARTYBOT_ETHEREALBLADE_RAID,       "PartyBot.EtherealBlade.Raid",  1);
+    setConfig(CONFIG_PARTYBOT_ASTRALIMPRISONMENT_RAID,  "PartyBot.AstralImprisonment.Raid",  1);
+
     //Dual Talent Specialization
     setConfig(CONFIG_SWAP_SPEC_INTERVAL,    "SwapSpecInterval", 900);
 
