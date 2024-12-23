@@ -1347,6 +1347,12 @@ void BattleBotAI::UpdateInCombatAI_Paladin()
             if (DoCastSpell(pVictim, m_spells.paladin.pJudgement) == SPELL_CAST_OK)
                 return;
         }
+        if (m_spells.paladin.pShiZiJunDaJi &&
+            CanTryToCastSpell(pVictim, m_spells.paladin.pShiZiJunDaJi))
+        {
+            if (DoCastSpell(pVictim, m_spells.paladin.pShiZiJunDaJi) == SPELL_CAST_OK)
+                return;
+        }
         if (m_spells.paladin.pHammerOfJustice &&
             pVictim->IsNonMeleeSpellCasted() &&
             CanTryToCastSpell(pVictim, m_spells.paladin.pHammerOfJustice))

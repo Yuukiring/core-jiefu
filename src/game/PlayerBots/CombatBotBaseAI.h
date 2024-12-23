@@ -291,6 +291,7 @@ public:
         {
             SpellEntry const* pAura;
             SpellEntry const* pQuZhu;
+            SpellEntry const* pShiZiJunDaJi;
             SpellEntry const* pSeal;
             SpellEntry const* pBlessingBuff;
             SpellEntry const* pBlessingOfProtection;

@@ -255,6 +255,12 @@ void CombatBotBaseAI::PopulateSpellData()
                         m_spells.paladin.pQuZhu->Id < pSpellEntry->Id)
                         m_spells.paladin.pQuZhu = pSpellEntry;
                 }
+                else if (pSpellEntry->SpellName[0].find("Shi Zi Jun Da Ji") != std::string::npos)
+                {
+                    if (!m_spells.paladin.pShiZiJunDaJi ||
+                        m_spells.paladin.pShiZiJunDaJi->Id < pSpellEntry->Id)
+                        m_spells.paladin.pShiZiJunDaJi = pSpellEntry;
+                }
                 else if (pSpellEntry->SpellName[0].find("Seal of Command") != std::string::npos)
                 {
                     if (IsHigherRankSpell(pSealOfCommand))
