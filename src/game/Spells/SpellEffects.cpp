@@ -414,6 +414,16 @@ void Spell::EffectSchoolDMG(SpellEffectIndex effect_idx)
                             damage = 0;
                         break;
                     }
+                    case 34296: // Crusader Strike
+                    {
+                        float attackPower = m_casterUnit->GetTotalAttackPowerValue(BASE_ATTACK);
+                        if (unitTarget)
+                            attackPower += m_casterUnit->GetTotalAuraModifierByMiscMask(SPELL_AURA_MOD_MELEE_ATTACK_POWER_VERSUS, unitTarget->GetCreatureTypeMask());
+                        damage = damage * attackPower / 100;
+                        if (unitTarget->HasAura(21183) || unitTarget->HasAura(20188) || unitTarget->HasAura(20300) || unitTarget->HasAura(20301) || unitTarget->HasAura(20302) || unitTarget->HasAura(20303))
+                            damage = damage * 1.5f;
+                        break;
+                    }
                     case 24933:                             // Cannon (Darkmoon Steam Tonk)
                     {
                         m_caster->CastSpell(unitTarget, 27766, true);
