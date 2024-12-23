@@ -2417,6 +2417,7 @@ enum Enchants
     WEP_FIERY,
     WEP_ICY,
     WEP_DEMONSLAYING,
+    WEP_STEELWEAPONCHAIN,
     WEP1H_AGILITY,
     WEP_SPELLPOWER,
     WEP_HEAL,
@@ -2454,6 +2455,7 @@ enum Enchants
     WEP1H_AGILITY_OFFHAND,
     WEP_SPELLPOWER_OFFHAND,
     WEP_HEAL_OFFHAND,
+    WEP_STEELWEAPONCHAIN_OFFHAND,
 };
 
 void Enchant(Player* player, Item* item, uint32 enchantid)
@@ -2547,6 +2549,7 @@ bool GossipSelect_EnchantNPC(Player* player, Creature* creature, uint32 sender, 
             player->ADD_GOSSIP_ITEM(5, "灼热武器",              GOSSIP_SENDER_MAIN, WEP_FIERY);
             player->ADD_GOSSIP_ITEM(5, "冰冷武器",                GOSSIP_SENDER_MAIN, WEP_ICY);
             player->ADD_GOSSIP_ITEM(5, "屠魔",       GOSSIP_SENDER_MAIN, WEP_DEMONSLAYING);
+            player->ADD_GOSSIP_ITEM(5, "钢质武器链",       GOSSIP_SENDER_MAIN, WEP_STEELWEAPONCHAIN);
             break;
         case EQUIPMENT_SLOT_OFFHAND:
             player->ADD_GOSSIP_ITEM(5, "盾牌：精神+9",             GOSSIP_SENDER_MAIN, OFFHAND_SPIRIT);
@@ -2561,6 +2564,7 @@ bool GossipSelect_EnchantNPC(Player* player, Creature* creature, uint32 sender, 
             player->ADD_GOSSIP_ITEM(5, "武器：敏捷+15",       GOSSIP_SENDER_MAIN, WEP1H_AGILITY_OFFHAND);
             player->ADD_GOSSIP_ITEM(5, "武器：法术伤害+30",       GOSSIP_SENDER_MAIN, WEP_SPELLPOWER_OFFHAND);
             player->ADD_GOSSIP_ITEM(5, "武器：治疗法术+55",       GOSSIP_SENDER_MAIN, WEP_HEAL_OFFHAND);
+            player->ADD_GOSSIP_ITEM(5, "武器：钢质武器链",       GOSSIP_SENDER_MAIN, WEP_STEELWEAPONCHAIN_OFFHAND);
             break;
         }
         player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, creature->GetGUID());
@@ -2628,6 +2632,10 @@ bool GossipSelect_EnchantNPC(Player* player, Creature* creature, uint32 sender, 
             case WEP_DEMONSLAYING:
                 item = player->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_MAINHAND);
                 id = 912;
+                break;
+            case WEP_STEELWEAPONCHAIN:
+                item = player->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_MAINHAND);
+                id = 37;
                 break;
 
             case OFFHAND_SPIRIT:
@@ -2738,6 +2746,7 @@ bool GossipSelect_EnchantNPC(Player* player, Creature* creature, uint32 sender, 
             case WEP1H_AGILITY_OFFHAND:
             case WEP_SPELLPOWER_OFFHAND:
             case WEP_HEAL_OFFHAND:
+            case WEP_STEELWEAPONCHAIN_OFFHAND:
                 item = player->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_OFFHAND);
                 if (item && item->GetProto()->Class != ITEM_CLASS_WEAPON)
                 {
@@ -2761,6 +2770,8 @@ bool GossipSelect_EnchantNPC(Player* player, Creature* creature, uint32 sender, 
                     id = 2504;
                 else if (action == WEP_HEAL_OFFHAND)
                     id = 2505;
+                else if (action == WEP_STEELWEAPONCHAIN_OFFHAND)
+                    id = 37;
                 break;
         }
         Enchant(player, item, id);
