@@ -4328,6 +4328,8 @@ int32 Unit::HasAura_34140_34141_total() const
             total += 2;
         else if (i->GetId() == 34141)
             total += 4;
+        else if (i->GetId() == 14983)
+            total += 10;
     }
     return total;
 }
