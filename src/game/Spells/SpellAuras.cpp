@@ -6111,7 +6111,7 @@ void Aura::HandleSchoolAbsorb(bool apply, bool Real)
                     if (spellProto->IsFitToFamilyMask<CF_PRIEST_POWER_WORD_SHIELD>())
                     {
                         // 10% coeff from healing bonus in vanilla
-                        // 100% coeff mod by jianggn
+                        // 100% coeff from healing and damage bonus mod by jianggn
                         DoneActualBenefit = caster->SpellBaseHealingBonusDone(spellProto->GetSpellSchoolMask()) * 1.0f + caster->SpellBaseDamageBonusDone(spellProto->GetSpellSchoolMask()) * 1.0f;
                         break;
                     }
@@ -6121,7 +6121,15 @@ void Aura::HandleSchoolAbsorb(bool apply, bool Real)
                     if (spellProto->IsFitToFamilyMask<CF_MAGE_FIRE_WARD, CF_MAGE_FROST_WARD>())
                     {
                         //+10% from +spd bonus
-                        DoneActualBenefit = caster->SpellBaseDamageBonusDone(spellProto->GetSpellSchoolMask()) * 0.1f;
+                        //+50% from +spd bonus mod by jianggn
+                        DoneActualBenefit = caster->SpellBaseDamageBonusDone(spellProto->GetSpellSchoolMask()) * 0.5f;
+                        break;
+                    }
+                    // Ice Barrier
+                    if (spellProto->Id == 11426 || spellProto->Id == 13031 || spellProto->Id == 13032 || spellProto->Id == 13033)
+                    {
+                        //+100% from +spd bonus mod by jianggn
+                        DoneActualBenefit = caster->SpellBaseDamageBonusDone(spellProto->GetSpellSchoolMask()) * 1.0f;
                         break;
                     }
                     break;
@@ -6130,7 +6138,8 @@ void Aura::HandleSchoolAbsorb(bool apply, bool Real)
                     if (spellProto->SpellIconID == 207 && spellProto->Category == 56)
                     {
                         //+10% from +spd bonus
-                        DoneActualBenefit = caster->SpellBaseDamageBonusDone(spellProto->GetSpellSchoolMask()) * 0.1f;
+                        //+50% from +spd bonus mod by jianggn
+                        DoneActualBenefit = caster->SpellBaseDamageBonusDone(spellProto->GetSpellSchoolMask()) * 0.5f;
                         break;
                     }
                     // Voidwalker - Sacrifice

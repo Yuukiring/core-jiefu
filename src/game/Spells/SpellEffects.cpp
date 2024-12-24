@@ -2575,6 +2575,20 @@ void Spell::EffectPowerDrain(SpellEffectIndex effIdx)
     damage = m_caster->SpellDamageBonusDone(unitTarget, m_spellInfo, effIdx, damage, SPELL_DIRECT_DAMAGE, 1, this);
     damage = unitTarget->SpellDamageBonusTaken(m_caster, m_spellInfo, effIdx, damage, SPELL_DIRECT_DAMAGE, 1, this);
 
+    //JieFuFuTi(34001) - Warlock - Dark Pact
+    if (unitTarget->HasAura(34001) && (m_spellInfo->Id == 18220 || m_spellInfo->Id == 18937 || m_spellInfo->Id == 18938))
+    {
+        uint32 jiefufuti = sWorld.getConfig(CONFIG_UINT32_BUFF_JIEFUFUTI);
+        if (jiefufuti > 99)
+            jiefufuti = 99;
+        if (Player* pPlayer = ToPlayer(m_caster))
+        {
+            if(pPlayer->GetLevel() < 60 && pPlayer->GetQuestStatus(10000) == QUEST_STATUS_COMPLETE)
+                jiefufuti = 0;
+        }
+        damage = (100.0f / (100.0f - jiefufuti)) * damage;
+    }
+
     float new_damage;
     if (curPower < damage)
         new_damage = curPower;
