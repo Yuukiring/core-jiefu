@@ -850,6 +850,24 @@ SpellAuraProcResult Unit::HandleDummyAuraProc(Unit* pVictim, uint32 amount, uint
                     triggered_spell_id = 34125;
                     break;                               // no hidden cooldown
                 }
+                // Hunter - Synergy - Rank1
+                case 34297:
+                {
+                    // heal amount
+                    basepoints[0] = dither(triggerAmount * amount / 100);
+                    target = this;
+                    triggered_spell_id = 34299;
+                    break;                               // no hidden cooldown
+                }
+                // Hunter - Synergy - Rank2
+                case 34298:
+                {
+                    // heal amount
+                    basepoints[0] = dither(triggerAmount * amount / 100);
+                    target = this;
+                    triggered_spell_id = 34299;
+                    break;                               // no hidden cooldown
+                }
                 // melee blood drain + 1%
                 case 34144:
                 {
