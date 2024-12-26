@@ -805,7 +805,52 @@ SpellAuraProcResult Unit::HandleDummyAuraProc(Unit* pVictim, uint32 amount, uint
                     }
                     basepoints[0] = (dither(this->GetMaxHealth() * 0.35f) >= dither((pVictim->GetHealth() * 0.04f + this->GetTotalAttackPowerValue(RANGED_ATTACK)) * distance_coefficient)) ? dither((pVictim->GetHealth() * 0.04f + this->GetTotalAttackPowerValue(RANGED_ATTACK)) * distance_coefficient) : dither(this->GetMaxHealth() * 0.35f);
                     target = pVictim;
-                    triggered_spell_id = 34011;
+                    if (this->HasAura(34302) || this->HasAura(34303))
+                    {
+                        if (Pet* pet = this->GetPet())
+                        {
+                            switch (pet->GetMeleeDamageSchoolMask())
+                            {
+                                case SPELL_SCHOOL_MASK_NORMAL:
+                                    triggered_spell_id = 34011;
+                                    break;
+                                case SPELL_SCHOOL_MASK_HOLY:
+                                    if (this->HasAura(34303))
+                                        triggered_spell_id = 34304;
+                                    else
+                                        triggered_spell_id = 34011;
+                                    break;
+                                case SPELL_SCHOOL_MASK_FIRE:
+                                    triggered_spell_id = 34305;
+                                    break;
+                                case SPELL_SCHOOL_MASK_NATURE:
+                                    triggered_spell_id = 34306;
+                                    break;
+                                case SPELL_SCHOOL_MASK_FROST:
+                                    triggered_spell_id = 34307;
+                                    break;
+                                case SPELL_SCHOOL_MASK_SHADOW:
+                                    if (this->HasAura(34303))
+                                        triggered_spell_id = 34308;
+                                    else
+                                        triggered_spell_id = 34011;
+                                    break;
+                                case SPELL_SCHOOL_MASK_ARCANE:
+                                    if (this->HasAura(34303))
+                                        triggered_spell_id = 34309;
+                                    else
+                                        triggered_spell_id = 34011;
+                                    break;
+                                default:
+                                    triggered_spell_id = 34011;
+                                    break;
+                            }
+                        }
+                        else
+                            triggered_spell_id = 34011;
+                    }
+                    else
+                        triggered_spell_id = 34011;
                     break;                               // no hidden cooldown
                 }
                 // Shaman: thundercloud

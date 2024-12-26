@@ -5672,9 +5672,21 @@ void Spell::TakeAmmo()
     if (!pCaster)
         return;
 
-    // Hurter - Butterfly : take no ammo
-    if (pCaster->HasAura(34132))
-        return;
+    // Hurter - Butterfly : 25%
+    // Hurter - Reload - Rank1 : 25%
+    // Hurter - Reload - Rank2 : 50%
+    if (pCaster->GetClass() == CLASS_HUNTER)
+    {
+        uint8 TakeNoAmmoRate = 0;
+        if (pCaster->HasAura(34132))
+            TakeNoAmmoRate += 25;
+        if (pCaster->HasAura(34302))
+            TakeNoAmmoRate += 25;
+        else if (pCaster->HasAura(34303))
+            TakeNoAmmoRate += 50;
+        if (urand(0, 100) < TakeNoAmmoRate)
+            return;
+    }
 
     // Some ranged attacks dont take any ammo
     switch (m_spellInfo->Id)
