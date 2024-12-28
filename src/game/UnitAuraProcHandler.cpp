@@ -1150,7 +1150,30 @@ SpellAuraProcResult Unit::HandleDummyAuraProc(Unit* pVictim, uint32 amount, uint
         case SPELLFAMILY_WARRIOR:
             break;
         case SPELLFAMILY_WARLOCK:
+        {
+            switch (dummySpell->Id)
+            {
+                // Warlock - Unstable Affliction - Rank1
+                case 34310:
+                {
+                    // heal amount
+                    basepoints[0] = dither(triggerAmount * amount / 100);
+                    target = this;
+                    triggered_spell_id = 34312;
+                    break;                               // no hidden cooldown
+                }
+                // Warlock - Unstable Affliction - Rank2
+                case 34311:
+                {
+                    // heal amount
+                    basepoints[0] = dither(triggerAmount * amount / 100);
+                    target = this;
+                    triggered_spell_id = 34312;
+                    break;                               // no hidden cooldown
+                }
+            }
             break;
+        }
         case SPELLFAMILY_PRIEST:
         {
             switch (dummySpell->Id)
