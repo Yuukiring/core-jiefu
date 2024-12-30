@@ -7017,8 +7017,8 @@ void Aura::HandleManaShield(bool apply, bool Real)
                 if (spellProto->IsFitToFamilyMask<CF_MAGE_MANA_SHIELD>())
                 {
                     // 0% coeff in vanilla (changed patch 2.4.0)
-                    // 200% coeff mod by jianggn
-                    DoneActualBenefit = caster->SpellBaseDamageBonusDone(spellProto->GetSpellSchoolMask()) * 2.0f;
+                    // 100% coeff mod by jianggn
+                    DoneActualBenefit = caster->SpellBaseDamageBonusDone(spellProto->GetSpellSchoolMask()) * 1.0f;
                     break;
                 }
                 break;
