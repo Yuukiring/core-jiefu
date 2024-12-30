@@ -356,7 +356,7 @@ struct Boss_Warlock : public ScriptedAI
 
     void Aggro(Unit* pWho) override
     {
-        m_creature->CallForHelp(250.0f);
+        m_creature->CallForHelp(533.0f);
         DoScriptText(SAY_AGGRO_WARLOCK, m_creature);
     }
 
