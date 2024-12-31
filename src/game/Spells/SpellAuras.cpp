@@ -6112,7 +6112,12 @@ void Aura::HandleSchoolAbsorb(bool apply, bool Real)
                     {
                         // 10% coeff from healing bonus in vanilla
                         // 100% coeff from healing and damage bonus mod by jianggn
+                        // Aphotic Shield bonus
                         DoneActualBenefit = caster->SpellBaseHealingBonusDone(spellProto->GetSpellSchoolMask()) * 1.0f + caster->SpellBaseDamageBonusDone(spellProto->GetSpellSchoolMask()) * 1.0f;
+                        if (caster->HasAura(34313))
+                            DoneActualBenefit += (caster->GetMaxHealth() + caster->GetMaxPower(POWER_MANA)) * 0.15f;
+                        else if (caster->HasAura(34314))
+                            DoneActualBenefit += (caster->GetMaxHealth() + caster->GetMaxPower(POWER_MANA)) * 0.3f;
                         break;
                     }
                     break;
